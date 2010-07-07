@@ -42,6 +42,26 @@ namespace MyUninstaller7 {
             path = path.Substring(5);
             return master.OpenSubKey(path);
         }
+        // Changes things like %APPDATA% to what it is currently set to
+        public string ResolveEnvironment(string path) {
+            int lastPerc = -1, curPos = 0;
+            while (true) {
+                int perc = path.IndexOf('%', curPos);
+                if (perc == -1) return path;
+                curPos = perc;
+                if (lastPerc == -1) lastPerc = perc;
+                else {
+                    string envVar = path.Substring(lastPerc + 1, perc - lastPerc - 1);
+                    string result = System.Environment.GetEnvironmentVariable(envVar);
+                    if (result != null) {
+                        path = path.Substring(0, lastPerc) + result + path.Substring(perc + 1);
+                        perc = perc - (envVar.Length + 2) + result.Length;
+                    }
+                    lastPerc = -1;
+                }
+                curPos = perc + 1;
+            }
+        }
         public static Utils utils = new Utils();
     }
     class GZipWriter : IDisposable {

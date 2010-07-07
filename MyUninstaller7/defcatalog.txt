@@ -27,19 +27,19 @@
 1	C:\Documents and Settings\
 0	C:\Documents and Settings\Arnab\Local Settings\
 0	C:\Documents and Settings\Arnab\Recent\
-1	C:\Program Files (x86)\
-1	C:\Program Files\
-1	C:\ProgramData\
-0	C:\ProgramData\Microsoft\eHome\
-1	C:\ProgramData\Microsoft\Microsoft Antimalware\
-1	C:\ProgramData\Microsoft\Search\
-1	C:\Users\Arnab\
-0	C:\Users\Arnab\AppData\Local\Microsoft\Windows\Temporary Internet Files\
-0	C:\Users\Arnab\AppData\Local\Temp\
-0	C:\Users\Arnab\AppData\Roaming\Microsoft\Windows\
-1	C:\Windows\
-0	C:\Windows\Prefetch\
-0	C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\PeerNetworking\
+1	%ProgramFiles(x86)%\
+1	%ProgramFiles%\
+1	%ProgramData%\
+0	%ProgramData%\Microsoft\eHome\
+1	%ProgramData%\Microsoft\Microsoft Antimalware\
+1	%ProgramData%\Microsoft\Search\
+1	%HOMEDRIVE%%HOMEPATH%\
+0	%HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\Windows\Temporary Internet Files\
+0	%HOMEDRIVE%%HOMEPATH%\AppData\Local\Temp\
+0	%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\
+1	%windir%\
+0	%windir%\Prefetch\
+0	%windir%\ServiceProfiles\LocalService\AppData\Roaming\PeerNetworking\
 2	D:\
 2	E:\
 1	F:\Program Files\
