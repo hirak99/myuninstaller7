@@ -1,4 +1,0 @@
-
-This should compile on both VC 2008 or VC Express 2008.
-
-One important thing is you need to copy the defdefcatalog.txt to the bin folder, it must be present with the .exe. It is also advisable to reduce the entries there for debugging. I plan to create this file automatically if not present, later on.

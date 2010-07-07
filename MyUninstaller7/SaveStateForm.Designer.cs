@@ -79,6 +79,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SaveStateForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Storing current state";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.SaveStateForm_FormClosing);
             this.ResumeLayout(false);

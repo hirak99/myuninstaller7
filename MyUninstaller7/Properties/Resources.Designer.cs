@@ -9,8 +9,9 @@
 //------------------------------------------------------------------------------
 
 namespace MyUninstaller7.Properties {
-
-
+    using System;
+    
+    
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -22,29 +23,29 @@ namespace MyUninstaller7.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-
+        
         private static global::System.Resources.ResourceManager resourceMan;
-
+        
         private static global::System.Globalization.CultureInfo resourceCulture;
-
+        
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         internal Resources() {
         }
-
+        
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-                if ((resourceMan == null)) {
+                if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MyUninstaller7.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
             }
         }
-
+        
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -56,6 +57,29 @@ namespace MyUninstaller7.Properties {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to # This file stores all the nodes that need to be tracked.
+        ///# 0 - exclude
+        ///# 1 - include with recursion
+        ///# 2 - include without recursion
+        ///
+        ///1	HKCR\
+        ///0	HKCR\Local Settings\
+        ///1	HKCU
+        ///0	HKCU\Software\Classes\Local Settings\
+        ///0	HKCU\Software\Microsoft\EventSystem\
+        ///0	HKCUSoftware\Microsoft\Internet Explorer\
+        ///0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\
+        ///0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\StreamMRU\
+        ///0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\Streams\
+        /// [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string defcatalog {
+            get {
+                return ResourceManager.GetString("defcatalog", resourceCulture);
             }
         }
     }
