@@ -138,7 +138,7 @@ namespace MyUninstaller7 {
                     Debug.Assert(IsCancelled() || nDepth == 0);
                 }
             }
-            return true;
+            return !IsCancelled();
         }
     }
 }

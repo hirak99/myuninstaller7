@@ -23,10 +23,9 @@ namespace MyUninstaller7 {
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
-            saveState.SaveState(backgroundWorker1.ReportProgress, 
+            result = saveState.SaveState(backgroundWorker1.ReportProgress, 
                 delegate {return backgroundWorker1.CancellationPending;}
                 );
-            result = true;
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
