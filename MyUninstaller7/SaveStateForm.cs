@@ -40,9 +40,6 @@ namespace MyUninstaller7 {
             label1.Text = status.path;
         }
 
-        private void button1_Click(object sender, EventArgs e) {
-        }
-
         private void SaveStateForm_FormClosing(object sender, FormClosingEventArgs e) {
             if (backgroundWorker1.IsBusy) {
                 backgroundWorker1.CancelAsync();

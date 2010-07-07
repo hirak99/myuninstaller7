@@ -15,7 +15,7 @@ namespace MyUninstaller7 {
             string text = Utils.utils.ResolveEnvironment("%HOMEDRIVE%%HOMEPATH%Arnab%abc%def%gh");
         }
 
-        private void button1_Click(object sender, EventArgs e) {
+        private void toolStripButton1_Click(object sender, EventArgs e) {
             //AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             SaveStateForm.SaveStateWithProgress(Utils.utils.ExeFolder() + @"state1.txt.gz");
             //Uninstaller unins = new Uninstaller();
