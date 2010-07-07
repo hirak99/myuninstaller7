@@ -1,0 +1,47 @@
+# This file stores all the nodes that need to be tracked.
+# 0 - exclude
+# 1 - include with recursion
+# 2 - include without recursion
+
+1	HKCR\
+0	HKCR\Local Settings\
+1	HKCU
+0	HKCU\Software\Classes\Local Settings\
+0	HKCU\Software\Microsoft\EventSystem\
+0	HKCUSoftware\Microsoft\Internet Explorer\
+0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\
+0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\StreamMRU\
+0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\Streams\
+0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\
+0	HKCUSoftware\Microsoft\Windows\CurrentVersion\NotificationMgr\
+0	HKCUSoftware\Microsoft\Windows\ShellNoRoam\
+1	HKLM\
+0	HKLM\COMPONENTS\
+0	HKLM\Schema\
+0	HKLM\Software\Microsoft\EventSystem\
+0	HKLM\Software\Microsoft\Protected Storage System Provider\
+0	HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\
+0	HKLM\SYSTEM\
+
+2	C:\
+1	C:\Documents and Settings\
+0	C:\Documents and Settings\Arnab\Local Settings\
+0	C:\Documents and Settings\Arnab\Recent\
+1	C:\Program Files (x86)\
+1	C:\Program Files\
+1	C:\ProgramData\
+0	C:\ProgramData\Microsoft\eHome\
+1	C:\ProgramData\Microsoft\Microsoft Antimalware\
+1	C:\ProgramData\Microsoft\Search\
+1	C:\Users\Arnab\
+0	C:\Users\Arnab\AppData\Local\Microsoft\Windows\Temporary Internet Files\
+0	C:\Users\Arnab\AppData\Local\Temp\
+0	C:\Users\Arnab\AppData\Roaming\Microsoft\Windows\
+1	C:\Windows\
+0	C:\Windows\Prefetch\
+0	C:\Windows\ServiceProfiles\LocalService\AppData\Roaming\PeerNetworking\
+2	D:\
+2	E:\
+1	F:\Program Files\
+0	F:\Program Files\! Installation Copied\
+0	F:\Program Files\! No installation\
