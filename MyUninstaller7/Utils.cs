@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using System.IO;
+using System.IO.Compression;
 
 namespace MyUninstaller7 {
     class Utils {
@@ -41,5 +43,20 @@ namespace MyUninstaller7 {
             return master.OpenSubKey(path);
         }
         public static Utils utils = new Utils();
+    }
+    class GZipWriter : IDisposable {
+        private GZipStream gzs;
+        private TextWriter sw;
+        public GZipWriter(string outFile) {
+            gzs = new GZipStream(File.OpenWrite(outFile), CompressionMode.Compress);
+            sw = new StreamWriter(gzs);
+        }
+        public TextWriter Writer {
+            get { return sw; }
+        }
+        public void Dispose() {
+            sw.Close();
+            gzs.Close();
+        }
     }
 }

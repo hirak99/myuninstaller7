@@ -17,7 +17,7 @@ namespace MyUninstaller7 {
         private void button1_Click(object sender, EventArgs e) {
             //AppDomain.CurrentDomain.SetPrincipalPolicy(PrincipalPolicy.WindowsPrincipal);
             Uninstaller unins = new Uninstaller();
-            unins.SaveState(Utils.utils.ExeFolder()+@"state1.stf");
+            unins.SaveState(Utils.utils.ExeFolder()+@"state1.txt.gz");
         }
     }
 }
