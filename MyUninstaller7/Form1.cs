@@ -52,6 +52,11 @@ namespace MyUninstaller7 {
             if (SaveStateForm.SaveStateWithProgress(stateFile2)) {
                 SetState(0);
                 //TODO: Comparison of the states goes here
+                StateComparer sc = new StateComparer();
+                sc.compare(stateFile1, stateFile2);
+                if (sc.onlyIn1.Count == 0 && sc.onlyIn2.Count == 0) {
+                    MessageBox.Show("No change was detected.", "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
         }
 

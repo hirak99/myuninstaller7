@@ -79,4 +79,19 @@ namespace MyUninstaller7 {
             gzs.Close();
         }
     }
+    class GZipReader : IDisposable {
+        private GZipStream gzs;
+        private TextReader sr;
+        public GZipReader(string inFile) {
+            gzs = new GZipStream(File.OpenRead(inFile), CompressionMode.Decompress);
+            sr = new StreamReader(gzs);
+        }
+        public TextReader Reader {
+            get { return sr; }
+        }
+        public void Dispose() {
+            sr.Close();
+            gzs.Close();
+        }
+    }
 }

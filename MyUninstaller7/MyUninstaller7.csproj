@@ -101,6 +101,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="StateComparer.cs" />
     <Compile Include="StateSaver.cs" />
     <Compile Include="SaveStateForm.cs">
       <SubType>Form</SubType>
