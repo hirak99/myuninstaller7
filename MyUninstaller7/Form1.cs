@@ -61,8 +61,9 @@ namespace MyUninstaller7 {
         }
 
         private void RefreshView() {
+            flexiListBox1.Items.Clear();
             foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
-                listBox1.Items.Add(ri.record.DisplayName);
+                flexiListBox1.Items.Add(ColoredListBox.CreateItem(ri.record.color, ri.record.DisplayName));
             }
         }
 
