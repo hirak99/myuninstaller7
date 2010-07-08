@@ -23,7 +23,7 @@ namespace MyUninstaller7 {
         public void SaveTo(TextWriter outStream) {
             outStream.WriteLine("Title: " + title);
             outStream.WriteLine("Datetime: " + dateTime.ToString("yyyy MMM dd HH:mm:ss.ffff"));
-            outStream.WriteLine("Color: #" + ColorTranslator.ToHtml(color));
+            outStream.WriteLine("Color: " + ColorTranslator.ToHtml(color));
             outStream.WriteLine("\nInstallation data follows -");
             foreach (string item in newItems)
                 outStream.WriteLine("A\t" + item);
@@ -32,9 +32,18 @@ namespace MyUninstaller7 {
         }
     }
     class RecordStore {
-        struct RecordInfo {
+        public class RecordInfo {
             public Record record;
             public string fileName;
+            public void SaveToFile() {
+                using (StreamWriter sw = new StreamWriter(fileName)) {
+                    record.SaveTo(sw);
+                }
+            }
+        }
+        private string parentDir;
+        public RecordStore(string ParentFolder) {
+            parentDir = Utils.utils.pathSlash(ParentFolder);
         }
         private List<RecordInfo> recordInfos = new List<RecordInfo>();
         public static Record CreateRecord(List<string> newItems, List<string> deletedItems) {
@@ -56,23 +65,20 @@ namespace MyUninstaller7 {
             return record;
         }
         private string GetFreeFileName() {
-            string dir = Utils.utils.ExeFolder();
-            string[] files = Directory.GetFiles(dir);
             string name;
             for (int i = 1; ; ++i) {
-                name = "InstallationRecord" + i + ".rec";
-                if (!files.Contains(name)) break;
+                name = parentDir + "InstallationRecord" + i + ".rec";
+                if (!File.Exists(name)) break;
             }
-            return dir + name;
+            return name;
         }
-        public void AddRecord(List<string> newItems, List<string> deletedItems) {
+        public RecordInfo AddRecord(List<string> newItems, List<string> deletedItems) {
             RecordInfo recordInfo = new RecordInfo();
             recordInfo.record = CreateRecord(newItems, deletedItems);
             recordInfo.fileName = GetFreeFileName();
-            using (StreamWriter sw = new StreamWriter(recordInfo.fileName)) {
-                recordInfo.record.SaveTo(sw);
-            }
             recordInfos.Add(recordInfo);
+            recordInfo.SaveToFile();
+            return recordInfo;
         }
     }
 }

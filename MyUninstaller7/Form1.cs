@@ -19,12 +19,17 @@ namespace MyUninstaller7 {
                     "Please restart with Admin mode if you have the privelege. Not all changes will be detected otherwise.",
                     "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            string recordStoreDir = Utils.utils.ExeFolder() + "Records";
+            if (!Directory.Exists(recordStoreDir)) {
+                Directory.CreateDirectory(recordStoreDir);
+            }
+            recordStore = new RecordStore(recordStoreDir);
         }
 
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
         private string stateFile2 = Utils.utils.ExeFolder() + @"state2.txt.gz";
 
-        private RecordStore recordStore = new RecordStore();
+        private RecordStore recordStore;
 
         /***
          * State = 0 means ready to note changes
@@ -65,7 +70,13 @@ namespace MyUninstaller7 {
                     MessageBox.Show("No change was detected.", "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else {
-                    recordStore.AddRecord(sc.onlyIn2, sc.onlyIn1);
+                    RecordStore.RecordInfo ri = recordStore.AddRecord(sc.onlyIn2, sc.onlyIn1);
+                    string recordName=ri.record.title;
+                    if (Utils.utils.InputBox("Uninstaller 7", "Name the record :", ref recordName) == DialogResult.OK)
+                        if (recordName != ri.record.title) {
+                            ri.record.title = recordName;
+                            ri.SaveToFile();
+                        }
                 }
             }
         }
