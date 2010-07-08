@@ -24,6 +24,8 @@ namespace MyUninstaller7 {
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
         private string stateFile2 = Utils.utils.ExeFolder() + @"state2.txt.gz";
 
+        private RecordStore recordStore = new RecordStore();
+
         /***
          * State = 0 means ready to note changes
          *       = 1 means already noting changes
@@ -61,6 +63,9 @@ namespace MyUninstaller7 {
                 sc.Compare(stateFile1, stateFile2);
                 if (sc.onlyIn1.Count == 0 && sc.onlyIn2.Count == 0) {
                     MessageBox.Show("No change was detected.", "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else {
+                    recordStore.AddRecord(sc.onlyIn2, sc.onlyIn1);
                 }
             }
         }
