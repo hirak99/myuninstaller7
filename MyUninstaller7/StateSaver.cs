@@ -40,8 +40,13 @@ namespace MyUninstaller7 {
         }
         private Catalog catalog;
 
+        private TextWriter writer;
+        private void StoreItem(string item) {
+            writer.WriteLine(item);
+        }
+
         private int nDepth = 0;
-        private void StoreRegistry(RegistryKey master, TextWriter writer, string path, bool recurse, string fullpath) {
+        private void StoreRegistry(RegistryKey master, string path, bool recurse, string fullpath) {
             if (IsCancelled()) return;
             RegistryKey rk;
             try {
@@ -53,22 +58,22 @@ namespace MyUninstaller7 {
             if (rk == null) return;
             if (catalog.shouldIgnore(fullpath)) return;
             if (nDepth++ <= 1) ReportProgress(fullpath);
-            writer.WriteLine(fullpath);
+            StoreItem(fullpath);
             string[] subkeys = rk.GetSubKeyNames();
             Array.Sort(subkeys);
             foreach (string subkey in subkeys) {
                 string newfullpath = fullpath + subkey + @"\";
-                if (!recurse) writer.WriteLine(newfullpath);
-                else StoreRegistry(rk, writer, subkey, recurse, newfullpath);
+                if (!recurse) StoreItem(newfullpath);
+                else StoreRegistry(rk, subkey, recurse, newfullpath);
             }
             rk.Close();
             nDepth--;
         }
-        private void StoreRegistry(TextWriter writer, string path, bool recurse) {
-            StoreRegistry(null, writer, path, recurse, path);
+        private void StoreRegistry(string path, bool recurse) {
+            StoreRegistry(null, path, recurse, path);
         }
         //[PrincipalPermission(SecurityAction.Demand, Role = @"BUILTIN\Administrators")]
-        private void StoreFolder(TextWriter writer, string path, bool recurse) {
+        private void StoreFolder(string path, bool recurse) {
             if (IsCancelled()) return;
             if (catalog.shouldIgnore(path)) return;
             string[] files;
@@ -80,15 +85,15 @@ namespace MyUninstaller7 {
                 return;
             }
             if (nDepth++ <= 1) ReportProgress(path);
-            writer.WriteLine(path);
+            StoreItem(path);
             Array.Sort(files);
-            foreach (string file in files) writer.WriteLine(file);
+            foreach (string file in files) StoreItem(file);
             string[] dirs = Directory.GetDirectories(path);
             Array.Sort(dirs);
             foreach(string dir_ in dirs) {
                 string dir = Utils.utils.pathSlash(dir_);
-                if (!recurse) writer.WriteLine(dir);
-                else StoreFolder(writer, dir, recurse);
+                if (!recurse) StoreItem(dir);
+                else StoreFolder(dir, recurse);
             }
             nDepth--;
         }
@@ -123,7 +128,7 @@ namespace MyUninstaller7 {
             reporter = reporter_;
             IsCancelled = cancelled_;
             using (GZipWriter gzs = new GZipWriter(outFile)) {
-                TextWriter sw = gzs.Writer;
+                writer = gzs.Writer;
                 catalog = new Catalog();
                 status.total = catalog.entries.Count(a => a.Value != 0);
                 status.current = 0;
@@ -131,9 +136,9 @@ namespace MyUninstaller7 {
                     if (catalog.entries.Values[i] == 0) continue;
                     status.current++;
                     if (Utils.utils.isRegistry(catalog.entries.Keys[i]))
-                        StoreRegistry(sw, catalog.entries.Keys[i], catalog.entries.Values[i] == 1);
+                        StoreRegistry(catalog.entries.Keys[i], catalog.entries.Values[i] == 1);
                     else
-                        StoreFolder(sw, catalog.entries.Keys[i], catalog.entries.Values[i] == 1);
+                        StoreFolder(catalog.entries.Keys[i], catalog.entries.Values[i] == 1);
                     if (IsCancelled()) return false;
                     Debug.Assert(IsCancelled() || nDepth == 0);
                 }
