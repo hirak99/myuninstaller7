@@ -24,6 +24,8 @@ namespace MyUninstaller7 {
                 Directory.CreateDirectory(recordStoreDir);
             }
             recordStore = new RecordStore(recordStoreDir);
+            RefreshView();
+            SetState(0);
         }
 
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
@@ -39,8 +41,11 @@ namespace MyUninstaller7 {
         protected void SetState(int newState) {
             State = newState;
             toolStripButton1.Enabled = (State == 0);
+            startNotingChangesToolStripMenuItem.Enabled = (State == 0);
             toolStripButton2.Enabled = (State == 1);
+            endNotingChangesToolStripMenuItem.Enabled = (State == 1);
             toolStripButton3.Enabled = (State == 1);
+            cancelNotingChangesToolStripMenuItem.Enabled = (State == 1);
         }
 
         // Creates the catalog if not already present
@@ -53,6 +58,12 @@ namespace MyUninstaller7 {
                 "application folder. You can" +
                 " edit this file to adjust which locations will be monitored during installation of" +
                 " appliations.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void RefreshView() {
+            foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
+                listBox1.Items.Add(ri.record.DisplayName);
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e) {
@@ -71,12 +82,13 @@ namespace MyUninstaller7 {
                 }
                 else {
                     RecordStore.RecordInfo ri = recordStore.AddRecord(sc.onlyIn2, sc.onlyIn1);
-                    string recordName=ri.record.title;
+                    string recordName=ri.record.DisplayName;
                     if (Utils.utils.InputBox("Uninstaller 7", "Name the record :", ref recordName) == DialogResult.OK)
-                        if (recordName != ri.record.title) {
-                            ri.record.title = recordName;
+                        if (recordName != ri.record.DisplayName) {
+                            ri.record.DisplayName = recordName;
                             ri.SaveToFile();
                         }
+                    RefreshView();
                 }
             }
         }
@@ -87,6 +99,10 @@ namespace MyUninstaller7 {
                 File.Delete(stateFile1);
                 SetState(0);
             }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
+            Close();
         }
     }
 }

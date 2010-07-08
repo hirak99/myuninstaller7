@@ -28,10 +28,18 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.startNotingChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.endNotingChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cancelNotingChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -41,9 +49,9 @@
             this.toolStripButton2,
             this.toolStripButton3,
             this.toolStripSeparator1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(431, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(448, 25);
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -79,18 +87,18 @@
             this.toolStripButton3.Text = "Cancel noting changes";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 246);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(431, 22);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 322);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(448, 22);
+            this.statusStrip1.TabIndex = 1;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // listBox1
             // 
@@ -98,23 +106,87 @@
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 28);
+            this.listBox1.IntegralHeight = false;
+            this.listBox1.Location = new System.Drawing.Point(0, 54);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(431, 212);
+            this.listBox1.Size = new System.Drawing.Size(448, 262);
             this.listBox1.TabIndex = 2;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(448, 24);
+            this.menuStrip1.TabIndex = 3;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.startNotingChangesToolStripMenuItem,
+            this.endNotingChangesToolStripMenuItem,
+            this.cancelNotingChangesToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitToolStripMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
+            // startNotingChangesToolStripMenuItem
+            // 
+            this.startNotingChangesToolStripMenuItem.Name = "startNotingChangesToolStripMenuItem";
+            this.startNotingChangesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.startNotingChangesToolStripMenuItem.Text = "&Start Noting Changes";
+            this.startNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // endNotingChangesToolStripMenuItem
+            // 
+            this.endNotingChangesToolStripMenuItem.Name = "endNotingChangesToolStripMenuItem";
+            this.endNotingChangesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.endNotingChangesToolStripMenuItem.Text = "&End Noting Changes";
+            this.endNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // cancelNotingChangesToolStripMenuItem
+            // 
+            this.cancelNotingChangesToolStripMenuItem.Name = "cancelNotingChangesToolStripMenuItem";
+            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.cancelNotingChangesToolStripMenuItem.Text = "&Cancel Noting Changes";
+            this.cancelNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(220, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(431, 268);
+            this.ClientSize = new System.Drawing.Size(448, 344);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "My Uninstaller 7";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -129,6 +201,13 @@
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startNotingChangesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem endNotingChangesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem cancelNotingChangesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }
 
