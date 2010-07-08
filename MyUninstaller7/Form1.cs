@@ -35,7 +35,7 @@ namespace MyUninstaller7 {
 
         /***
          * State = 0 means ready to note changes
-         *       = 1 means already noting changes
+         *       = 1 means started to note changes
          ***/
         private int State = 0;
         protected void SetState(int newState) {
@@ -107,7 +107,15 @@ namespace MyUninstaller7 {
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
-            
+            if (State == 0) {
+                try {
+                    File.Delete(stateFile1);
+                    File.Delete(stateFile2);
+                } catch (Exception ex) {
+                    MessageBox.Show("Could perform deletion of the state files. There could be a problem. Please check.\n" + ex.Message,
+                        "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
+            }
         }
     }
 }
