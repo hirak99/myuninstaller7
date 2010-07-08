@@ -126,35 +126,34 @@
             // 
             this.startNotingChangesToolStripMenuItem.Name = "startNotingChangesToolStripMenuItem";
             this.startNotingChangesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.startNotingChangesToolStripMenuItem.Text = "&Start Noting Changes";
             this.startNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // endNotingChangesToolStripMenuItem
             // 
             this.endNotingChangesToolStripMenuItem.Name = "endNotingChangesToolStripMenuItem";
-            this.endNotingChangesToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.endNotingChangesToolStripMenuItem.Text = "&End Noting Changes";
             this.endNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // cancelNotingChangesToolStripMenuItem
             // 
             this.cancelNotingChangesToolStripMenuItem.Name = "cancelNotingChangesToolStripMenuItem";
-            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.cancelNotingChangesToolStripMenuItem.Text = "&Cancel Noting Changes";
             this.cancelNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(220, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -183,6 +182,7 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "My Uninstaller 7";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);

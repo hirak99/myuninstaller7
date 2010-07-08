@@ -42,6 +42,3 @@
 0	%windir%\ServiceProfiles\LocalService\AppData\Roaming\PeerNetworking\
 2	D:\
 2	E:\
-1	F:\Program Files\
-0	F:\Program Files\! Installation Copied\
-0	F:\Program Files\! No installation\

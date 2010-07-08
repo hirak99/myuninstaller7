@@ -6,6 +6,8 @@ using System.Drawing;
 using Microsoft.Win32;
 using System.IO;
 using System.Globalization;
+using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace MyUninstaller7 {
     class Record {
@@ -16,10 +18,34 @@ namespace MyUninstaller7 {
         // Returns list of entries with uninstallation information in this record
         public List<string> UninstallEntries() {
             List<string> regEntries = new List<string>();
-            const string RegUninPrefix = "HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\";
-            foreach (string path in newItems)
-                if (path.StartsWith(RegUninPrefix)) regEntries.Add(path);
+            string[] RegUninRegEx = new string[]{
+                @"^HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\.*$",
+                @"^HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Installer\\UserData\\[^\\]*\\Products\\[^\\]*\\$"
+            };
+            // If more locations are added, they must be handled in the foreach below manually. The following check serves as a reminder.
+            Debug.Assert(RegUninRegEx.Length == 2);
+            foreach (string path in newItems) {
+                if (Regex.Match(path, RegUninRegEx[0], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
+                    regEntries.Add(path);
+                }
+                else if (Regex.Match(path, RegUninRegEx[1], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
+                    regEntries.Add(path + "InstallProperties\\");
+                }
+            }
             return regEntries;
+        }
+        public string SuggestDisplayName() {
+            List<string> uninsts = UninstallEntries();
+            List<string> names = new List<string>();
+            foreach (string entry in uninsts) {
+                RegistryKey rk = Utils.utils.openRegKey(entry);
+                if (rk == null) continue;
+                string name = (string)rk.GetValue("DisplayName");
+                if (name != null) names.Add(name);
+                rk.Close();
+            }
+            if (names.Count > 0) return names.Aggregate((a, b) => a + ", " + b);
+            else return "(DisplayName not detected)";
         }
         private static string afterSpace(string line) {
             return line.Substring(line.IndexOf(' ')+1);
@@ -39,11 +65,12 @@ namespace MyUninstaller7 {
             rec.deletedItems = new List<string>();
             while (true) {
                 string line = inStream.ReadLine();
-                if (line == null) return rec;
+                if (line == null) break;
                 if (line[0] == 'A') rec.newItems.Add(line.Substring(2));
                 else if (line[0] == 'D') rec.deletedItems.Add(line.Substring(2));
                 else return null;
             }
+            return rec;
         }
         private static string strLineBeforeData = "Installation data follows -";
         public void SaveTo(TextWriter outStream) {
@@ -95,16 +122,7 @@ namespace MyUninstaller7 {
             record.newItems = new List<string>(newItems);
             record.deletedItems = new List<string>(deletedItems);
             record.color = Color.FromArgb(196, 255, 196);
-            List<string> uninsts = record.UninstallEntries();
-            List<string> names = new List<string>();
-            foreach (string entry in uninsts) {
-                RegistryKey rk = Utils.utils.openRegKey(entry);
-                string name = (string)rk.GetValue("DisplayName");
-                if (name != null) names.Add(name);
-                rk.Close();
-            }
-            if (names.Count > 0) record.DisplayName = names.Aggregate((a, b) => a + ", " + b);
-            else record.DisplayName = "(DisplayName not detected)";
+            record.DisplayName = record.SuggestDisplayName();
             return record;
         }
         private string GetFreeFileName() {

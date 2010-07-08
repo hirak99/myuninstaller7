@@ -105,5 +105,9 @@ namespace MyUninstaller7 {
         private void exitToolStripMenuItem_Click(object sender, EventArgs e) {
             Close();
         }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
+            
+        }
     }
 }

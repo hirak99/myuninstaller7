@@ -85,6 +85,8 @@ namespace MyUninstaller7 {
                 return;
             } catch (UnauthorizedAccessException) {
                 return;
+            } catch (IOException) {
+                return;
             }
             if (nDepth++ <= 1) ReportProgress(path);
             StoreItem(path);
