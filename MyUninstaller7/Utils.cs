@@ -68,7 +68,7 @@ namespace MyUninstaller7 {
         private GZipStream gzs;
         private TextWriter sw;
         public GZipWriter(string outFile) {
-            gzs = new GZipStream(File.OpenWrite(outFile), CompressionMode.Compress);
+            gzs = new GZipStream(File.Create(outFile), CompressionMode.Compress);
             sw = new StreamWriter(gzs);
         }
         public TextWriter Writer {

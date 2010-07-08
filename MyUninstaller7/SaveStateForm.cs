@@ -29,13 +29,22 @@ namespace MyUninstaller7 {
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
+            if (e.Error!=null) {
+                result = false;
+                MessageBox.Show(e.Error.GetType().ToString() + "\n\n" 
+                    + e.Error.Message + "\n\n" + e.Error.TargetSite 
+                    + "\n\n" + e.Error.StackTrace, "Error", 
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            if (e.Cancelled) result = false;
             Close();
         }
 
         private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             StateSaver.Status status = (StateSaver.Status)e.UserState;
             progressBar1.Value = status.current;
-            progressBar1.Maximum = status.total;
+            // Without the + 1, the progress bar will be complete while the last entry is still being processed
+            progressBar1.Maximum = status.total + 1;
             label1.Text = status.path;
         }
 

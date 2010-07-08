@@ -59,13 +59,15 @@ namespace MyUninstaller7 {
             if (catalog.shouldIgnore(fullpath)) return;
             if (nDepth++ <= 1) ReportProgress(fullpath);
             StoreItem(fullpath);
-            string[] subkeys = rk.GetSubKeyNames();
-            Array.Sort(subkeys);
-            foreach (string subkey in subkeys) {
-                string newfullpath = fullpath + subkey + @"\";
-                if (!recurse) StoreItem(newfullpath);
-                else StoreRegistry(rk, subkey, recurse, newfullpath);
-            }
+            try {
+                string[] subkeys = rk.GetSubKeyNames();
+                Array.Sort(subkeys);
+                foreach (string subkey in subkeys) {
+                    string newfullpath = fullpath + subkey + @"\";
+                    if (!recurse) StoreItem(newfullpath);
+                    else StoreRegistry(rk, subkey, recurse, newfullpath);
+                }
+            } catch (UnauthorizedAccessException) { }
             rk.Close();
             nDepth--;
         }
