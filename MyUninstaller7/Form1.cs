@@ -14,6 +14,11 @@ namespace MyUninstaller7 {
         public Form1() {
             InitializeComponent();
             EnsureCatalog();
+            if (!Utils.utils.IsUserAdministrator()) {
+                MessageBox.Show("It is preferred that you run this program as Admin. " +
+                    "Please restart with Admin mode if you have the privelege. Not all changes will be detected otherwise.",
+                    "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
@@ -53,7 +58,7 @@ namespace MyUninstaller7 {
                 SetState(0);
                 //TODO: Comparison of the states goes here
                 StateComparer sc = new StateComparer();
-                sc.compare(stateFile1, stateFile2);
+                sc.Compare(stateFile1, stateFile2);
                 if (sc.onlyIn1.Count == 0 && sc.onlyIn2.Count == 0) {
                     MessageBox.Show("No change was detected.", "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

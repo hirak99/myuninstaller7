@@ -31,7 +31,7 @@ namespace MyUninstaller7 {
                         string line = sr.ReadLine();
                         if (line.Length == 0 || line[0] == '#') continue;
                         string[] words = line.Split('\t');
-                        words[1] = Utils.utils.ResolveEnvironment(Utils.utils.pathSlash(words[1]));
+                        words[1] = Environment.ExpandEnvironmentVariables(Utils.utils.pathSlash(words[1]));
                         entries.Add(words[1],int.Parse(words[0]));
                     }
                 }
@@ -100,8 +100,8 @@ namespace MyUninstaller7 {
             nDepth--;
         }
         private string outFile;
-        public StateSaver(string outFile_) {
-            outFile = outFile_;
+        public StateSaver(string _outFile) {
+            outFile = _outFile;
         }
 
         #region Progress Reporter

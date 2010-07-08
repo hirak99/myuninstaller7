@@ -7,7 +7,7 @@ using System.IO;
 namespace MyUninstaller7 {
     class StateComparer {
         public List<string> onlyIn1, onlyIn2;
-        public void compare(string file1, string file2) {
+        public void Compare(string file1, string file2) {
             List<string>[] record = new List<string>[] { new List<string>(), new List<string>() };
             using (GZipReader gzr1 = new GZipReader(file1))
             using (GZipReader gzr2 = new GZipReader(file2)) {

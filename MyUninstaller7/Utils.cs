@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.IO;
 using System.IO.Compression;
+using System.Security.Principal;
 
 namespace MyUninstaller7 {
     class Utils {
@@ -42,6 +43,14 @@ namespace MyUninstaller7 {
             path = path.Substring(5);
             return master.OpenSubKey(path);
         }
+
+        /****
+         * The method below was recreated unnecessarily, as it is exactly equivalent
+         *   to Environment.ExpandEnvironmentVariables. I feel relactant to delete it
+         *   so I will comment it out for now. This may come handy later, if I want
+         *   to do more fancy stuff with the paths.
+         ****/
+        /*
         // Changes things like %APPDATA% to what it is currently set to
         public string ResolveEnvironment(string path) {
             int lastPerc = -1, curPos = 0;
@@ -61,9 +70,28 @@ namespace MyUninstaller7 {
                 }
                 curPos = perc + 1;
             }
+        }*/
+
+        public bool IsUserAdministrator() {
+            //bool value to hold our return value
+            bool isAdmin;
+            try {
+                //get the currently logged in user
+                WindowsIdentity user = WindowsIdentity.GetCurrent();
+                WindowsPrincipal principal = new WindowsPrincipal(user);
+                isAdmin = principal.IsInRole(WindowsBuiltInRole.Administrator);
+            } catch (UnauthorizedAccessException ex) {
+                isAdmin = false;
+                MessageBox.Show(ex.Message);
+            } catch (Exception ex) {
+                isAdmin = false;
+                MessageBox.Show(ex.Message);
+            }
+            return isAdmin;
         }
         public static Utils utils = new Utils();
     }
+
     class GZipWriter : IDisposable {
         private GZipStream gzs;
         private TextWriter sw;
