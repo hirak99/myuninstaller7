@@ -119,41 +119,41 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // startNotingChangesToolStripMenuItem
             // 
             this.startNotingChangesToolStripMenuItem.Name = "startNotingChangesToolStripMenuItem";
             this.startNotingChangesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.startNotingChangesToolStripMenuItem.Text = "&Start Noting Changes";
             this.startNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // endNotingChangesToolStripMenuItem
             // 
             this.endNotingChangesToolStripMenuItem.Name = "endNotingChangesToolStripMenuItem";
-            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.endNotingChangesToolStripMenuItem.Text = "&End Noting Changes";
             this.endNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // cancelNotingChangesToolStripMenuItem
             // 
             this.cancelNotingChangesToolStripMenuItem.Name = "cancelNotingChangesToolStripMenuItem";
-            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.cancelNotingChangesToolStripMenuItem.Text = "&Cancel Noting Changes";
             this.cancelNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -178,6 +178,7 @@
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
