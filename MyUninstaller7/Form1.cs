@@ -126,7 +126,7 @@ namespace MyUninstaller7 {
         private void viewUninstallationLogToolStripMenuItem_Click(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0) return;
             int index = listView1.SelectedIndices[0];
-            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record);
+            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index]);
             uf.ShowDialog();
         }
 
