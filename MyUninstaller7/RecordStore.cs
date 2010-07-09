@@ -10,82 +10,82 @@ using System.Text.RegularExpressions;
 using System.Diagnostics;
 
 namespace MyUninstaller7 {
-    class Record {
-        public string DisplayName;
-        public DateTime dateTime;
-        public Color color;
-        public List<string> newItems, deletedItems;
-        // Returns list of entries with uninstallation information in this record
-        public List<string> UninstallEntries() {
-            List<string> regEntries = new List<string>();
-            string[] RegUninRegEx = new string[]{
+    public class RecordStore {
+        public class Record {
+            public string DisplayName;
+            public DateTime dateTime;
+            public Color color;
+            public List<string> newItems, deletedItems;
+            // Returns list of entries with uninstallation information in this record
+            public List<string> UninstallEntries() {
+                List<string> regEntries = new List<string>();
+                string[] RegUninRegEx = new string[]{
                 @"^HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\.*$",
                 @"^HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Installer\\UserData\\[^\\]*\\Products\\[^\\]*\\$"
             };
-            // If more locations are added, they must be handled in the foreach below manually. The following check serves as a reminder.
-            Debug.Assert(RegUninRegEx.Length == 2);
-            foreach (string path in newItems) {
-                if (Regex.Match(path, RegUninRegEx[0], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
-                    regEntries.Add(path);
+                // If more locations are added, they must be handled in the foreach below manually. The following check serves as a reminder.
+                Debug.Assert(RegUninRegEx.Length == 2);
+                foreach (string path in newItems) {
+                    if (Regex.Match(path, RegUninRegEx[0], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
+                        regEntries.Add(path);
+                    }
+                    else if (Regex.Match(path, RegUninRegEx[1], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
+                        regEntries.Add(path + "InstallProperties\\");
+                    }
                 }
-                else if (Regex.Match(path, RegUninRegEx[1], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
-                    regEntries.Add(path + "InstallProperties\\");
+                return regEntries;
+            }
+            public string SuggestDisplayName() {
+                List<string> uninsts = UninstallEntries();
+                List<string> names = new List<string>();
+                foreach (string entry in uninsts) {
+                    RegistryKey rk = Utils.utils.openRegKey(entry);
+                    if (rk == null) continue;
+                    string name = (string)rk.GetValue("DisplayName");
+                    if (name != null) names.Add(name);
+                    rk.Close();
                 }
+                if (names.Count > 0) return names.Aggregate((a, b) => a + ", " + b);
+                else return "(DisplayName not detected)";
             }
-            return regEntries;
-        }
-        public string SuggestDisplayName() {
-            List<string> uninsts = UninstallEntries();
-            List<string> names = new List<string>();
-            foreach (string entry in uninsts) {
-                RegistryKey rk = Utils.utils.openRegKey(entry);
-                if (rk == null) continue;
-                string name = (string)rk.GetValue("DisplayName");
-                if (name != null) names.Add(name);
-                rk.Close();
+            private static string afterSpace(string line) {
+                return line.Substring(line.IndexOf(' ') + 1);
             }
-            if (names.Count > 0) return names.Aggregate((a, b) => a + ", " + b);
-            else return "(DisplayName not detected)";
-        }
-        private static string afterSpace(string line) {
-            return line.Substring(line.IndexOf(' ')+1);
-        }
-        public static Record LoadFrom(TextReader inStream) {
-            Record rec = new Record();
-            rec.DisplayName = afterSpace(inStream.ReadLine());
-            string datetime = afterSpace(inStream.ReadLine());
-            rec.dateTime = DateTime.Parse(datetime);
-            rec.color = ColorTranslator.FromHtml(afterSpace(inStream.ReadLine()));
-            while (true) {
-                string line = inStream.ReadLine();
-                if (line==null) return null;
-                if (inStream.ReadLine() == strLineBeforeData) break;
+            public static Record LoadFrom(TextReader inStream) {
+                Record rec = new Record();
+                rec.DisplayName = afterSpace(inStream.ReadLine());
+                string datetime = afterSpace(inStream.ReadLine());
+                rec.dateTime = DateTime.Parse(datetime);
+                rec.color = ColorTranslator.FromHtml(afterSpace(inStream.ReadLine()));
+                while (true) {
+                    string line = inStream.ReadLine();
+                    if (line == null) return null;
+                    if (inStream.ReadLine() == strLineBeforeData) break;
+                }
+                rec.newItems = new List<string>();
+                rec.deletedItems = new List<string>();
+                while (true) {
+                    string line = inStream.ReadLine();
+                    if (line == null) break;
+                    if (line[0] == 'A') rec.newItems.Add(line.Substring(2));
+                    else if (line[0] == 'D') rec.deletedItems.Add(line.Substring(2));
+                    else return null;
+                }
+                return rec;
             }
-            rec.newItems = new List<string>();
-            rec.deletedItems = new List<string>();
-            while (true) {
-                string line = inStream.ReadLine();
-                if (line == null) break;
-                if (line[0] == 'A') rec.newItems.Add(line.Substring(2));
-                else if (line[0] == 'D') rec.deletedItems.Add(line.Substring(2));
-                else return null;
+            private static string strLineBeforeData = "Installation data follows -";
+            public void SaveTo(TextWriter outStream) {
+                outStream.WriteLine("Title: " + DisplayName);
+                outStream.WriteLine("Datetime: " + dateTime.ToString("yyyy MMM dd hh:mm:ss.ffff tt"));
+                outStream.WriteLine("Color: " + ColorTranslator.ToHtml(color));
+                outStream.WriteLine("\n" + strLineBeforeData);
+                foreach (string item in newItems)
+                    outStream.WriteLine("A\t" + item);
+                foreach (string item in deletedItems)
+                    outStream.WriteLine("D\t" + item);
             }
-            return rec;
         }
-        private static string strLineBeforeData = "Installation data follows -";
-        public void SaveTo(TextWriter outStream) {
-            outStream.WriteLine("Title: " + DisplayName);
-            outStream.WriteLine("Datetime: " + dateTime.ToString("yyyy MMM dd hh:mm:ss.ffff tt"));
-            outStream.WriteLine("Color: " + ColorTranslator.ToHtml(color));
-            outStream.WriteLine("\n" + strLineBeforeData);
-            foreach (string item in newItems)
-                outStream.WriteLine("A\t" + item);
-            foreach (string item in deletedItems)
-                outStream.WriteLine("D\t" + item);
-        }
-    }
 
-    class RecordStore {
         public class RecordInfo {
             public Record record;
             public string fileName;
@@ -96,6 +96,7 @@ namespace MyUninstaller7 {
             }
         }
         public List<RecordInfo> recordInfos;
+
         private string parentDir;
         public RecordStore(string ParentFolder) {
             parentDir = Utils.utils.pathSlash(ParentFolder);

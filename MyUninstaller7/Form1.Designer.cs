@@ -37,8 +37,12 @@
             this.cancelNotingChangesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewUninstallationLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.flexiListBox1 = new MyUninstaller7.ColoredListBox();
             this.toolStrip1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -94,6 +98,8 @@
             // 
             // statusStrip1
             // 
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 266);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(380, 22);
@@ -103,7 +109,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.actionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(380, 24);
@@ -157,6 +164,28 @@
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // actionsToolStripMenuItem
+            // 
+            this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.viewUninstallationLogToolStripMenuItem});
+            this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.actionsToolStripMenuItem.Text = "&Actions";
+            // 
+            // viewUninstallationLogToolStripMenuItem
+            // 
+            this.viewUninstallationLogToolStripMenuItem.Name = "viewUninstallationLogToolStripMenuItem";
+            this.viewUninstallationLogToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
+            this.viewUninstallationLogToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.viewUninstallationLogToolStripMenuItem.Text = "&Uninstallation...";
+            this.viewUninstallationLogToolStripMenuItem.Click += new System.EventHandler(this.viewUninstallationLogToolStripMenuItem_Click);
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(109, 17);
+            this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            // 
             // flexiListBox1
             // 
             this.flexiListBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -164,9 +193,9 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.flexiListBox1.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             this.flexiListBox1.IntegralHeight = false;
-            this.flexiListBox1.Location = new System.Drawing.Point(0, 54);
+            this.flexiListBox1.Location = new System.Drawing.Point(0, 52);
             this.flexiListBox1.Name = "flexiListBox1";
-            this.flexiListBox1.Size = new System.Drawing.Size(380, 209);
+            this.flexiListBox1.Size = new System.Drawing.Size(380, 211);
             this.flexiListBox1.TabIndex = 4;
             // 
             // Form1
@@ -186,6 +215,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -209,6 +240,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private ColoredListBox flexiListBox1;
+        private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewUninstallationLogToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

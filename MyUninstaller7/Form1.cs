@@ -24,7 +24,7 @@ namespace MyUninstaller7 {
                 Directory.CreateDirectory(recordStoreDir);
             }
             recordStore = new RecordStore(recordStoreDir);
-            RefreshView();
+            RefreshList();
             SetState(0);
         }
 
@@ -46,6 +46,8 @@ namespace MyUninstaller7 {
             endNotingChangesToolStripMenuItem.Enabled = (State == 1);
             toolStripButton3.Enabled = (State == 1);
             cancelNotingChangesToolStripMenuItem.Enabled = (State == 1);
+            if (State == 0) toolStripStatusLabel1.Text = "Ready.";
+            else toolStripStatusLabel1.Text = "Noting changes.";
         }
 
         // Creates the catalog if not already present
@@ -60,7 +62,7 @@ namespace MyUninstaller7 {
                 " appliations.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void RefreshView() {
+        private void RefreshList() {
             flexiListBox1.Items.Clear();
             foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
                 flexiListBox1.Items.Add(ColoredListBox.CreateItem(ri.record.color, ri.record.DisplayName));
@@ -70,6 +72,7 @@ namespace MyUninstaller7 {
         private void toolStripButton1_Click(object sender, EventArgs e) {
             if (SaveStateForm.SaveStateWithProgress(Utils.utils.ExeFolder() + @"state1.txt.gz"))
                 SetState(1);
+            else toolStripStatusLabel1.Text = "Cancelled noting changes.";
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e) {
@@ -89,7 +92,7 @@ namespace MyUninstaller7 {
                             ri.record.DisplayName = recordName;
                             ri.SaveToFile();
                         }
-                    RefreshView();
+                    RefreshList();
                 }
             }
         }
@@ -115,6 +118,13 @@ namespace MyUninstaller7 {
                     MessageBox.Show("Could perform deletion of the state files. There could be a problem. Please check.\n" + ex.Message,
                         "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+            }
+        }
+
+        private void viewUninstallationLogToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (flexiListBox1.SelectedIndex >= 0) {
+                UninstallForm uf = new UninstallForm(recordStore.recordInfos[flexiListBox1.SelectedIndex].record);
+                uf.ShowDialog();
             }
         }
     }

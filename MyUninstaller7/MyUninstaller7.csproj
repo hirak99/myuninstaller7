@@ -90,6 +90,9 @@
     <EmbeddedResource Include="SaveStateForm.resx">
       <DependentUpon>SaveStateForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="UninstallForm.resx">
+      <DependentUpon>UninstallForm.cs</DependentUpon>
+    </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
@@ -115,6 +118,12 @@
       <DependentUpon>SaveStateForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Utils.cs" />
+    <Compile Include="UninstallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UninstallForm.Designer.cs">
+      <DependentUpon>UninstallForm.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
