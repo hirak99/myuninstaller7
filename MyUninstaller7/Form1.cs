@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Security.Principal;
 using System.IO;
+using System.Diagnostics;
 
 namespace MyUninstaller7 {
     public partial class Form1 : Form {
@@ -19,18 +20,17 @@ namespace MyUninstaller7 {
                     "Please restart with Admin mode if you have the privelege. Not all changes will be detected otherwise.",
                     "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            string recordStoreDir = Utils.utils.ExeFolder() + "Records";
             if (!Directory.Exists(recordStoreDir)) {
                 Directory.CreateDirectory(recordStoreDir);
             }
             listView1_Resize(this, null);
-            recordStore = new RecordStore(recordStoreDir);
             RefreshList();
             SetState(0);
         }
 
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
         private string stateFile2 = Utils.utils.ExeFolder() + @"state2.txt.gz";
+        private string recordStoreDir = Utils.utils.ExeFolder() + "Records";
 
         private RecordStore recordStore;
 
@@ -64,11 +64,13 @@ namespace MyUninstaller7 {
         }
 
         private void RefreshList() {
+            recordStore = new RecordStore(recordStoreDir);
             listView1.Items.Clear();
             foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
                 listView1.Items.Add(ri.record.DisplayName);
                 listView1.Items[listView1.Items.Count - 1].BackColor = ri.record.color;
             }
+            if (listView1.Items.Count > 0) listView1.Items[0].Selected = true;
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e) {
@@ -123,15 +125,26 @@ namespace MyUninstaller7 {
             }
         }
 
-        private void viewUninstallationLogToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void listView1_Resize(object sender, EventArgs e) {
+            listView1.Columns[0].Width = listView1.ClientRectangle.Width;
+        }
+
+        //TODO: need to add view deleted items
+        private void installedItemsToolStripMenuItem_Click(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0) return;
             int index = listView1.SelectedIndices[0];
-            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index]);
+            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record.newItems);
             uf.ShowDialog();
         }
 
-        private void listView1_Resize(object sender, EventArgs e) {
-            listView1.Columns[0].Width = listView1.ClientRectangle.Width;
+        private void editRecordToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (listView1.SelectedIndices.Count == 0) return;
+            int index = listView1.SelectedIndices[0];
+            Process.Start("Notepad", recordStore.recordInfos[index].fileName);
+        }
+
+        private void reloadToolStripMenuItem_Click(object sender, EventArgs e) {
+            RefreshList();
         }
     }
 }

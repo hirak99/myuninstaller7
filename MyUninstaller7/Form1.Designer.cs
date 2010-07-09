@@ -39,9 +39,11 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewUninstallationLogToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.installedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -174,18 +176,28 @@
             // actionsToolStripMenuItem
             // 
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.viewUninstallationLogToolStripMenuItem});
+            this.installedItemsToolStripMenuItem,
+            this.editRecordToolStripMenuItem,
+            this.reloadToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
             this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.actionsToolStripMenuItem.Text = "&Actions";
             // 
-            // viewUninstallationLogToolStripMenuItem
+            // installedItemsToolStripMenuItem
             // 
-            this.viewUninstallationLogToolStripMenuItem.Name = "viewUninstallationLogToolStripMenuItem";
-            this.viewUninstallationLogToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.U)));
-            this.viewUninstallationLogToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.viewUninstallationLogToolStripMenuItem.Text = "&Uninstallation...";
-            this.viewUninstallationLogToolStripMenuItem.Click += new System.EventHandler(this.viewUninstallationLogToolStripMenuItem_Click);
+            this.installedItemsToolStripMenuItem.Name = "installedItemsToolStripMenuItem";
+            this.installedItemsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
+            this.installedItemsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.installedItemsToolStripMenuItem.Text = "&Installed items...";
+            this.installedItemsToolStripMenuItem.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
+            // 
+            // editRecordToolStripMenuItem
+            // 
+            this.editRecordToolStripMenuItem.Name = "editRecordToolStripMenuItem";
+            this.editRecordToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.editRecordToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.editRecordToolStripMenuItem.Text = "&Edit record";
+            this.editRecordToolStripMenuItem.Click += new System.EventHandler(this.editRecordToolStripMenuItem_Click);
             // 
             // listView1
             // 
@@ -202,6 +214,14 @@
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
             this.listView1.Resize += new System.EventHandler(this.listView1_Resize);
+            // 
+            // reloadToolStripMenuItem
+            // 
+            this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
+            this.reloadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.reloadToolStripMenuItem.Text = "&Reload";
+            this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -245,10 +265,12 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem actionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem viewUninstallationLogToolStripMenuItem;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ToolStripMenuItem installedItemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editRecordToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
     }
 }
 
