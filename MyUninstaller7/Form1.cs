@@ -23,6 +23,7 @@ namespace MyUninstaller7 {
             if (!Directory.Exists(recordStoreDir)) {
                 Directory.CreateDirectory(recordStoreDir);
             }
+            listView1_Resize(this, null);
             recordStore = new RecordStore(recordStoreDir);
             RefreshList();
             SetState(0);
@@ -63,9 +64,10 @@ namespace MyUninstaller7 {
         }
 
         private void RefreshList() {
-            flexiListBox1.Items.Clear();
+            listView1.Items.Clear();
             foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
-                flexiListBox1.Items.Add(ColoredListBox.CreateItem(ri.record.color, ri.record.DisplayName));
+                listView1.Items.Add(ri.record.DisplayName);
+                listView1.Items[listView1.Items.Count - 1].BackColor = ri.record.color;
             }
         }
 
@@ -122,10 +124,14 @@ namespace MyUninstaller7 {
         }
 
         private void viewUninstallationLogToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (flexiListBox1.SelectedIndex >= 0) {
-                UninstallForm uf = new UninstallForm(recordStore.recordInfos[flexiListBox1.SelectedIndex].record);
-                uf.ShowDialog();
-            }
+            if (listView1.SelectedIndices.Count == 0) return;
+            int index = listView1.SelectedIndices[0];
+            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record);
+            uf.ShowDialog();
+        }
+
+        private void listView1_Resize(object sender, EventArgs e) {
+            listView1.Columns[0].Width = listView1.ClientRectangle.Width;
         }
     }
 }

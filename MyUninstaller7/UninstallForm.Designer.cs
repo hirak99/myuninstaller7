@@ -27,8 +27,10 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
+            this.listView2 = new System.Windows.Forms.ListView();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -54,6 +56,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listView2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -66,12 +69,25 @@
             // 
             this.listView1.Activation = System.Windows.Forms.ItemActivation.OneClick;
             this.listView1.CheckBoxes = true;
-            this.listView1.Location = new System.Drawing.Point(6, 6);
+            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(370, 163);
+            this.listView1.Size = new System.Drawing.Size(433, 185);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
+            // 
+            // listView2
+            // 
+            this.listView2.Activation = System.Windows.Forms.ItemActivation.OneClick;
+            this.listView2.CheckBoxes = true;
+            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView2.Location = new System.Drawing.Point(3, 3);
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(433, 185);
+            this.listView2.TabIndex = 1;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.List;
             // 
             // UninstallForm
             // 
@@ -83,6 +99,7 @@
             this.Text = "Uninstall";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -93,6 +110,7 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listView2;
 
 
     }

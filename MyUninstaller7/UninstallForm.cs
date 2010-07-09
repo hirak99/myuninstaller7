@@ -18,14 +18,15 @@ namespace MyUninstaller7 {
 
         private void PopulateItems(ListView list, List<string> items) {
             foreach (string s in items) {
-                list.Items.Add(s, 0);
-                list.Items[0].BackColor = Color.AliceBlue;
+                ListViewItem listItem = list.Items.Add(s, 0);
+                if (!Utils.utils.Exists(s))
+                    listItem.BackColor = Color.LightGray;
             }
         }
 
         private void PopulateItems() {
             PopulateItems(listView1, record.newItems);
-            //PopulateItems(checkedListBox2, record.deletedItems);
+            PopulateItems(listView2, record.deletedItems);
         }
     }
 }

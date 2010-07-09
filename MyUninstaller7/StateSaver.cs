@@ -31,7 +31,7 @@ namespace MyUninstaller7 {
                         string line = sr.ReadLine();
                         if (line.Length == 0 || line[0] == '#') continue;
                         string[] words = line.Split('\t');
-                        words[1] = Environment.ExpandEnvironmentVariables(Utils.utils.pathSlash(words[1]));
+                        words[1] = Environment.ExpandEnvironmentVariables(Utils.utils.PathSlash(words[1]));
                         entries.Add(words[1],int.Parse(words[0]));
                     }
                 }
@@ -50,7 +50,7 @@ namespace MyUninstaller7 {
             if (IsCancelled()) return;
             RegistryKey rk;
             try {
-                if (master == null) rk = Utils.utils.openRegKey(path);
+                if (master == null) rk = Utils.utils.OpenRegKey(path);
                 else rk = master.OpenSubKey(path);
             } catch (SecurityException) {
                 return;
@@ -95,7 +95,7 @@ namespace MyUninstaller7 {
             string[] dirs = Directory.GetDirectories(path);
             Array.Sort(dirs);
             foreach(string dir_ in dirs) {
-                string dir = Utils.utils.pathSlash(dir_);
+                string dir = Utils.utils.PathSlash(dir_);
                 if (!recurse) StoreItem(dir);
                 else StoreFolder(dir, recurse);
             }
@@ -139,7 +139,7 @@ namespace MyUninstaller7 {
                 for (int i = 0; i < catalog.entries.Count; ++i) {
                     if (catalog.entries.Values[i] == 0) continue;
                     status.current++;
-                    if (Utils.utils.isRegistry(catalog.entries.Keys[i]))
+                    if (Utils.utils.IsRegistry(catalog.entries.Keys[i]))
                         StoreRegistry(catalog.entries.Keys[i], catalog.entries.Values[i] == 1);
                     else
                         StoreFolder(catalog.entries.Keys[i], catalog.entries.Values[i] == 1);

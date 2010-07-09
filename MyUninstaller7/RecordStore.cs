@@ -39,7 +39,7 @@ namespace MyUninstaller7 {
                 List<string> uninsts = UninstallEntries();
                 List<string> names = new List<string>();
                 foreach (string entry in uninsts) {
-                    RegistryKey rk = Utils.utils.openRegKey(entry);
+                    RegistryKey rk = Utils.utils.OpenRegKey(entry);
                     if (rk == null) continue;
                     string name = (string)rk.GetValue("DisplayName");
                     if (name != null) names.Add(name);
@@ -99,7 +99,7 @@ namespace MyUninstaller7 {
 
         private string parentDir;
         public RecordStore(string ParentFolder) {
-            parentDir = Utils.utils.pathSlash(ParentFolder);
+            parentDir = Utils.utils.PathSlash(ParentFolder);
             LoadAllRecords();
         }
         private void LoadAllRecords() {

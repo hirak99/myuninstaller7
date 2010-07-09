@@ -20,29 +20,44 @@ namespace MyUninstaller7 {
             }
             return appFolder;
         }
-        public string pathSlash(string path) {
+        public string PathSlash(string path) {
             path = path.Trim();
             if (path[path.Length - 1] != '\\') path = path + @"\";
             return path;
         }
-        private RegistryKey regRoot(string first4) {
+        private RegistryKey RegRoot(string first4) {
             if (first4 == "HKLM") return Registry.LocalMachine;
             else if (first4 == "HKCR") return Registry.ClassesRoot;
             else if (first4 == "HKCU") return Registry.CurrentUser;
             else return null;
         }
-        public bool isRegistry(string path) {
+        public bool IsRegistry(string path) {
             if (path.Length < 4) return false;
             string first4 = path.Substring(0, 4);
-            RegistryKey master = regRoot(first4);
+            RegistryKey master = RegRoot(first4);
             return master != null;
         }
-        public RegistryKey openRegKey(string path) {
+        public RegistryKey OpenRegKey(string path) {
             if (path.Length < 4) return null;
             string first4 = path.Substring(0, 4).ToUpper();
-            RegistryKey master = regRoot(first4);
+            RegistryKey master = RegRoot(first4);
             path = path.Substring(5);
             return master.OpenSubKey(path);
+        }
+        public bool Exists(string item) {
+            if (IsRegistry(item)) {
+                RegistryKey rk = OpenRegKey(item);
+                if (rk != null) {
+                    rk.Close();
+                    return true;
+                }
+                else return false;
+            }
+            else {
+                if (item[item.Length - 1] == '\\')
+                    return Directory.Exists(item);
+                else return File.Exists(item);
+            }
         }
 
         /****
