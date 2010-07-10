@@ -18,7 +18,7 @@ namespace MyUninstaller7 {
             public bool StillExists;
             // 0 - RegKey, 1 - Folder, 2 - File
             public int Type;
-            public bool Checked = false;
+            public bool Checked = true;
             public Record(string path) {
                 Path = path;
                 if (Utils.utils.IsRegistry(path)) Type = 0;
@@ -71,7 +71,7 @@ namespace MyUninstaller7 {
             foreach (Record record in records) {
                 if (!record.Checked) continue;
                 stream.WriteLine("echo Removing " + record.Path);
-                if (record.Type==0) stream.WriteLine("reg delete " + record.Path);
+                if (record.Type==0) stream.WriteLine("reg delete /f " + record.Path);
                 else if (record.Type==1) stream.WriteLine("rmdir /s /q \"" + record.Path + "\"");
                 else if (record.Type==2) stream.WriteLine("del /f \"" + record.Path + "\"");
             }
@@ -79,6 +79,82 @@ namespace MyUninstaller7 {
             stream.WriteLine("echo Done!");
             stream.WriteLine("pause");
             return true;
+        }
+
+        private void PerformUninstall() {
+            bool nativeProcessRan = false;
+            while (true) {
+                List<string> uninstCmds = rsr.UninstallValuesOf("UninstallString");
+                if (uninstCmds.Count == 0) break;
+                DialogResult dresult = MessageBox.Show("The entries this application has created for automatic uninstallation are still present. " +
+                    "It is recommended that the native uninstallation is run first. " +
+                    "Do you want to run them now?\n\n" +
+                    uninstCmds.Select(a=>("Uninstallation command: '"+a+"'")).Aggregate((a, b) => a + "\n" + b),
+                    "Uninstallation",
+                    MessageBoxButtons.YesNoCancel,
+                    MessageBoxIcon.Question);
+                if (dresult == DialogResult.Cancel) return;
+                else if (dresult == DialogResult.No) break;
+                nativeProcessRan = true;
+                Process puninst = Process.Start(uninstCmds[0]);
+                while (true) {
+                    MessageBox.Show("Native uninstallation process ('" + uninstCmds[0] + "') is running. Please click Ok when the process completes.",
+                        "Uninstaller 7",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                    if (puninst.HasExited) break;
+                    dresult = MessageBox.Show("It appears that the process '" + uninstCmds[0] + "'has not yest terminated! Continue anyway?",
+                        "Uninstaller 7",
+                        MessageBoxButtons.YesNoCancel,
+                        MessageBoxIcon.Exclamation,
+                        MessageBoxDefaultButton.Button2);
+                    if (dresult == DialogResult.Cancel) return;
+                    else if (dresult == DialogResult.Yes) break;
+                }
+            }
+            if (nativeProcessRan) PopulateItems();
+            // Now that the native uninstallation is taken care of, here begins the removal of entries part
+            if (records.All(a => !a.Checked)) {
+                MessageBox.Show("There is nothing remaining to uninstall.",
+                    "Uninstaller 7",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+                return;
+            }
+            if (MessageBox.Show("This will begin the uninstallation. There will be no further warning. Press Ok to continue.",
+                "Uninstaller 7",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Exclamation) == DialogResult.Cancel) return;
+            foreach (Record record in records) {
+                if (!record.Checked) continue;
+                if (record.Type == 0) {
+                    string parent = Utils.utils.parentPath(record.Path);
+                    string child = record.Path.Substring(parent.Length);
+                    RegistryKey rk = Utils.utils.OpenRegKey(parent, true);
+                    if (rk != null) {
+                        try {
+                            rk.DeleteSubKeyTree(child);
+                        }
+                        catch (Exception) { }
+                        rk.Close();
+                    }
+                }
+                else if (record.Type == 1) {
+                    try {
+                        Directory.Delete(record.Path, true);
+                    }
+                    catch { }
+                }
+                else if (record.Type == 2) {
+                    File.Delete(record.Path);
+                }
+            }
+            PopulateItems();
+            bool remaining = records.All(a => !a.Checked);
+            MessageBox.Show(remaining ? "Some items are still remaining!" : "Uninstallation has completed successfully.",
+                "Uninstaller 7",
+                MessageBoxButtons.OK,
+                remaining ? MessageBoxIcon.Asterisk : MessageBoxIcon.Information);
         }
 
         // This scans for existance, sorts, and populates the list view
@@ -106,7 +182,7 @@ namespace MyUninstaller7 {
                     listItem.ForeColor = Color.LightGray;
                 if (rec.Type == 0) listItem.BackColor = Color.GhostWhite;
                 else if (rec.Type == 1) listItem.BackColor = Color.LightYellow;
-                else listItem.BackColor = Color.WhiteSmoke;
+                else listItem.BackColor = Color.White;
             }
             columnHeader1.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);
         }
@@ -165,6 +241,10 @@ namespace MyUninstaller7 {
                         MessageBoxIcon.Warning);
                 }
             }
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e) {
+            PerformUninstall();
         }
     }
 }

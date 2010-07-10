@@ -9,6 +9,7 @@ using System.IO.Compression;
 using System.Security.Principal;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace MyUninstaller7 {
     // This will not be required in dotNet 4.0
@@ -44,12 +45,15 @@ namespace MyUninstaller7 {
             RegistryKey master = RegRoot(first4);
             return master != null;
         }
-        public RegistryKey OpenRegKey(string path) {
+        public RegistryKey OpenRegKey(string path, bool writable) {
             if (path.Length < 4) return null;
             string first4 = path.Substring(0, 4).ToUpper();
             RegistryKey master = RegRoot(first4);
             path = path.Substring(5);
-            return master.OpenSubKey(path);
+            return master.OpenSubKey(path, writable);
+        }
+        public RegistryKey OpenRegKey(string path) {
+            return OpenRegKey(path, false);
         }
         public bool Exists(string item) {
             if (IsRegistry(item)) {
@@ -170,6 +174,11 @@ namespace MyUninstaller7 {
         }
         
         public static Utils utils = new Utils();
+
+        internal string parentPath(string p) {
+            while (p.Length > 0 && p[p.Length - 1] == '\\') p = p.Substring(0, p.Length - 1);
+            return p.Substring(0, p.LastIndexOf('\\') + 1);
+        }
     }
 
     class GZipWriter : IDisposable {

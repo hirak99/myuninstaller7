@@ -41,8 +41,24 @@ namespace MyUninstaller7 {
         private int State = 0;
         protected void SetState(int newState) {
             State = newState;
-            toolStripButton1.Enabled = (State == 0);
-            startNotingChangesToolStripMenuItem.Enabled = (State == 0);
+            foreach (ToolStripButton button in new ToolStripButton[]{
+                toolStripButton1, toolStripButton4
+            })
+                button.Enabled = (State == 0);
+            foreach (ToolStripMenuItem button in new ToolStripMenuItem[]{
+                startNotingChangesToolStripMenuItem, cancelNotingChangesToolStripMenuItem,
+                reloadToolStripMenuItem
+            })
+                button.Enabled = (State == 0);
+            foreach (ToolStripButton button in new ToolStripButton[]{
+                toolStripButton2, toolStripButton3
+            })
+                button.Enabled = (State == 1);
+            foreach (ToolStripMenuItem button in new ToolStripMenuItem[]{
+                endNotingChangesToolStripMenuItem
+            })
+                button.Enabled = (State == 1);
+            listView1_SelectedIndexChanged(this, null);
             toolStripButton2.Enabled = (State == 1);
             endNotingChangesToolStripMenuItem.Enabled = (State == 1);
             toolStripButton3.Enabled = (State == 1);
@@ -64,6 +80,9 @@ namespace MyUninstaller7 {
         }
 
         private void RefreshList() {
+            int index;
+            if (listView1.SelectedIndices.Count == 0) index = 0;
+            else index = listView1.SelectedIndices[0];
             recordStore = new RecordStore(recordStoreDir);
             listView1.Items.Clear();
             foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
@@ -71,6 +90,11 @@ namespace MyUninstaller7 {
                 listView1.Items[listView1.Items.Count - 1].BackColor = ri.record.color;
             }
             if (listView1.Items.Count > 0) listView1.Items[0].Selected = true;
+            if (listView1.Items.Count == index) index--;
+            if (index >= 0) {
+                listView1.Items[index].Selected = true;
+                listView1.Items[index].Focused = true;
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e) {
@@ -133,7 +157,9 @@ namespace MyUninstaller7 {
         private void installedItemsToolStripMenuItem_Click(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0) return;
             int index = listView1.SelectedIndices[0];
-            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record, sender.Equals(installedItemsToolStripMenuItem));
+            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record,
+                sender.Equals(installedItemsToolStripMenuItem) ||
+                sender.Equals(toolStripButton6));
             uf.ShowDialog();
         }
 
@@ -148,11 +174,13 @@ namespace MyUninstaller7 {
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) {
-            if (listView1.SelectedIndices.Count == 0) {
+            if (listView1.SelectedIndices.Count == 0 || State == 1) {
                 installedItemsToolStripMenuItem.Enabled = false;
                 viewDeletedToolStripMenuItem.Enabled = false;
                 renameToolStripMenuItem.Enabled = false;
+                editRecordToolStripMenuItem.Enabled = false;
                 toolStripButton5.Enabled = false;
+                toolStripButton6.Enabled = false;
             }
             else {
                 RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
@@ -162,7 +190,9 @@ namespace MyUninstaller7 {
                 installedItemsToolStripMenuItem.Enabled = (ri.record.newItems.Count > 0);
                 viewDeletedToolStripMenuItem.Enabled = (ri.record.deletedItems.Count > 0);
                 renameToolStripMenuItem.Enabled = true;
+                editRecordToolStripMenuItem.Enabled = true;
                 toolStripButton5.Enabled = true;
+                toolStripButton6.Enabled = (ri.record.newItems.Count > 0);
             }
         }
 
@@ -183,6 +213,17 @@ namespace MyUninstaller7 {
             MessageBox.Show(message, "My Uninstaller 7",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);
+        }
+
+        private void deleteRecordToolStripMenuItem_Click(object sender, EventArgs e) {
+            RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
+            if (MessageBox.Show("Delete record '" + ri.record.DisplayName + "'?",
+                "Uninstaller 7",
+                MessageBoxButtons.OKCancel,
+                MessageBoxIcon.Question) == DialogResult.OK) {
+                    File.Delete(ri.fileName);
+                    RefreshList();
+            }
         }
     }
 }

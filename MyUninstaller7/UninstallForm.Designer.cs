@@ -119,6 +119,7 @@
             this.toolStripButton3.Size = new System.Drawing.Size(51, 22);
             this.toolStripButton3.Text = "&Uninstall";
             this.toolStripButton3.ToolTipText = "Begin the uninstallation process";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // button1
             // 
@@ -138,7 +139,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(94, 23);
             this.button2.TabIndex = 4;
-            this.button2.Text = "Mark/unmark all";
+            this.button2.Text = "Mark/unmark &all";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.markUnmark_Click);
             // 
