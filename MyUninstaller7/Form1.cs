@@ -178,7 +178,8 @@ namespace MyUninstaller7 {
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
-            string message = "My Uninstaller Version " + Application.ProductVersion;
+            string message = "My Uninstaller Version " + Application.ProductVersion + "\n"
+                + "Email: hirak99@gmail.com";
             MessageBox.Show(message, "My Uninstaller 7",
                 MessageBoxButtons.OK,
                 MessageBoxIcon.Information);

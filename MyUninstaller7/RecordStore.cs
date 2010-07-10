@@ -35,16 +35,20 @@ namespace MyUninstaller7 {
                 }
                 return regEntries;
             }
-            public string SuggestDisplayName() {
+            public List<string> UninstallValuesOf(string RegValueName) {
                 List<string> uninsts = UninstallEntries();
-                List<string> names = new List<string>();
+                List<string> values = new List<string>();
                 foreach (string entry in uninsts) {
                     RegistryKey rk = Utils.utils.OpenRegKey(entry);
                     if (rk == null) continue;
-                    string name = (string)rk.GetValue("DisplayName");
-                    if (name != null) names.Add(name);
+                    string value = (string)rk.GetValue(RegValueName);
+                    if (value != null) values.Add(value);
                     rk.Close();
                 }
+                return values;
+            }
+            public string SuggestDisplayName() {
+                List<string> names = UninstallValuesOf("DisplayName");
                 if (names.Count > 0) return names.Aggregate((a, b) => a + ", " + b);
                 else return "(DisplayName not detected)";
             }
