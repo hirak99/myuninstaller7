@@ -133,7 +133,7 @@ namespace MyUninstaller7 {
         private void installedItemsToolStripMenuItem_Click(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0) return;
             int index = listView1.SelectedIndices[0];
-            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record.newItems);
+            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record, sender.Equals(installedItemsToolStripMenuItem));
             uf.ShowDialog();
         }
 

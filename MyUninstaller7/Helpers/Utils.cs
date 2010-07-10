@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Security.Principal;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace MyUninstaller7 {
     class Utils {
@@ -145,6 +146,21 @@ namespace MyUninstaller7 {
             DialogResult dialogResult = form.ShowDialog();
             value = textBox.Text;
             return dialogResult;
+        }
+
+        public Image FadeImage(Image img) {
+            Bitmap bmp = new Bitmap(img);
+            // A tutorial on locking bits can be found here -
+            //   http://www.bobpowell.net/lockingbits.htm
+            //BitmapData bmpdata = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+            for (int x = 0; x < bmp.Width; ++x)
+                for (int y = 0; y < bmp.Height; ++y) {
+                    Color c = bmp.GetPixel(x, y);
+                    c = Color.FromArgb(c.A / 3, c);
+                    bmp.SetPixel(x, y, c);
+                }
+            //bmp.UnlockBits(bmpdata);
+            return bmp;
         }
         
         public static Utils utils = new Utils();

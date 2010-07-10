@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Drawing.Imaging;
 
 namespace MyUninstaller7 {
     public partial class UninstallForm : Form {
@@ -23,15 +24,31 @@ namespace MyUninstaller7 {
             }
         }
         private List<Record> records = new List<Record>();
-        public UninstallForm(List<string> items) {
+        private bool _Installed;
+
+        private List<string> UninstallEntries;
+        public UninstallForm(RecordStore.Record rec, bool Installed) {
             InitializeComponent();
-            foreach (string s in items)
+            _Installed = Installed;
+            Text = (Installed ? "Installed Items" : "Deleted Items");
+            if (!Installed) {
+                for (int i=1; i<toolStrip1.Items.Count; ++i)
+                    toolStrip1.Items[i].Visible = false;
+                //toolStripSeparator1.Visible = false;
+                //toolStripButton2.Visible = false;
+                //toolStripButton3.Visible = false;
+                listView1.CheckBoxes = false;
+            }
+            if (Installed) UninstallEntries = rec.UninstallEntries();
+            for (int i = 0; i < 3; ++i)
+                imageList1.Images.Add(Utils.utils.FadeImage((Image)imageList1.Images[i].Clone()));
+            foreach (string s in (Installed ? rec.newItems : rec.deletedItems))
                 records.Add(new Record(s));
-            ReloadItems();
+            PopulateItems();
         }
 
         // This scans for existance, sorts, and populates the list view
-        private void ReloadItems() {
+        private void PopulateItems() {
             foreach (Record rec in records)
                 rec.StillExists = Utils.utils.Exists(rec.Path);
             records.Sort((a, b) => {
@@ -42,7 +59,9 @@ namespace MyUninstaller7 {
             });
             listView1.Items.Clear();
             foreach (Record rec in records) {
-                ListViewItem listItem = listView1.Items.Add(rec.Path, 0);
+                int imageIndex = rec.Type;
+                if (!rec.StillExists) imageIndex += 3;
+                ListViewItem listItem = listView1.Items.Add(rec.Path, imageIndex);
                 if (!rec.StillExists) rec.Checked = false;
                 else listItem.Checked = rec.Checked;
                 if (!rec.StillExists)
@@ -57,6 +76,32 @@ namespace MyUninstaller7 {
         private void listView1_ItemChecked(object sender, ItemCheckedEventArgs e) {
             if (!records[e.Item.Index].StillExists) e.Item.Checked = false;
             else records[e.Item.Index].Checked = e.Item.Checked;
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e) {
+            PopulateItems();
+        }
+
+        private void markUnmark_Click(object sender, EventArgs e) {
+            // Mark/unmark all
+            bool selectedOnly = sender.Equals(button3);
+            bool anyChecked = false;
+            for (int i = 0; i < records.Count; ++i) {
+                if (!selectedOnly || listView1.Items[i].Selected) {
+                    if (records[i].Checked && records[i].StillExists) {
+                        anyChecked = true;
+                        break;
+                    }
+                }
+            }
+            bool desiredState = !anyChecked;
+            for (int i=0; i<records.Count; ++i) {
+                Record rec=records[i];
+                if ((!selectedOnly || listView1.Items[i].Selected) && rec.StillExists) {
+                    rec.Checked = desiredState;
+                    listView1.Items[i].Checked = desiredState;
+                }
+            }
         }
     }
 }
