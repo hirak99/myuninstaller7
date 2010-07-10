@@ -18,7 +18,7 @@ namespace MyUninstaller7 {
             public bool StillExists;
             // 0 - RegKey, 1 - Folder, 2 - File
             public int Type;
-            public bool Checked = true;
+            public bool Checked = false;
             public Record(string path) {
                 Path = path;
                 if (Utils.utils.IsRegistry(path)) Type = 0;
@@ -147,7 +147,7 @@ namespace MyUninstaller7 {
                 MessageBox.Show("Cannot create script since none of the entries is selected to be in there.",
                     "Uninstaller 7",
                     MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                    MessageBoxIcon.Exclamation);
                 return;
             }
             saveFileDialog1.FileName = "Uninstall '" + rsr.DisplayName + "'";

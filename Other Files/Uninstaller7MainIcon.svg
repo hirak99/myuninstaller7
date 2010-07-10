@@ -17,10 +17,21 @@
    inkscape:version="0.47 r22583"
    sodipodi:docname="Uninstaller7MainIcon.svg"
    inkscape:export-filename="C:\Documents and Settings\QAM00328\Desktop\Uninstaller7MainIcon.png"
-   inkscape:export-xdpi="8.0100002"
-   inkscape:export-ydpi="8.0100002">
+   inkscape:export-xdpi="12.05"
+   inkscape:export-ydpi="12.05">
   <defs
      id="defs4">
+    <linearGradient
+       id="linearGradient2874">
+      <stop
+         style="stop-color:#ffff80;stop-opacity:1;"
+         offset="0"
+         id="stop2876" />
+      <stop
+         style="stop-color:#ffe380;stop-opacity:1;"
+         offset="1"
+         id="stop2878" />
+    </linearGradient>
     <linearGradient
        id="linearGradient3613">
       <stop
@@ -97,6 +108,44 @@
        fx="436.60623"
        fy="521.84027"
        r="335.78853" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2874"
+       id="linearGradient2880"
+       x1="252.85715"
+       y1="402.36218"
+       x2="347.68167"
+       y2="522.36218"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2874"
+       id="linearGradient2882"
+       x1="183.85301"
+       y1="304.58386"
+       x2="227.1196"
+       y2="374.05707"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2874"
+       id="linearGradient2875"
+       gradientUnits="userSpaceOnUse"
+       x1="252.85715"
+       y1="402.36218"
+       x2="347.68167"
+       y2="522.36218"
+       gradientTransform="matrix(1,0,0,0.92957807,0,39.808068)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2874"
+       id="linearGradient2878"
+       gradientUnits="userSpaceOnUse"
+       x1="183.85301"
+       y1="304.58386"
+       x2="227.1196"
+       y2="374.05707"
+       gradientTransform="matrix(1.1575806,0,0,1,-22.218214,0)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -105,8 +154,8 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="416.78891"
+     inkscape:zoom="1.2417778"
+     inkscape:cx="372.04724"
      inkscape:cy="580.22039"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -132,23 +181,19 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <g
-       id="g3878"
-       transform="matrix(0.81246403,0,0,0.76947471,89.977081,130.57728)">
-      <path
-         sodipodi:nodetypes="ccccccc"
-         id="path3867"
-         d="m 62.795131,282.94775 c 5.432724,-67.71894 35.312705,-56.04326 35.312705,-56.04326 l 143.007294,0 c 2.87964,0 27.96023,-7.13971 33.55623,53.70811 2.71636,39.6973 -38.02907,126.09731 -38.02907,126.09731 l -135.81809,0 -38.029069,-123.76216 z"
-         style="fill:#ffff80;fill-opacity:1;stroke:#000000;stroke-width:2.99218202;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none" />
-      <rect
-         ry="20.203051"
-         y="276.36218"
-         x="61.142864"
-         height="288.57144"
-         width="417.14285"
-         id="rect3853"
-         style="fill:#ffff80;fill-opacity:1;stroke:#000000;stroke-width:3;stroke-miterlimit:4;stroke-dasharray:none" />
-    </g>
+    <path
+       style="fill:url(#linearGradient2878);fill-opacity:1;stroke:none"
+       d="m 140.99587,348.29842 c 5.10943,-52.10801 33.21133,-43.12387 33.21133,-43.12387 l 134.4973,0 c 2.70829,0 26.29639,-5.49383 31.55939,41.32703 2.55472,30.54607 -18.85482,96.22339 -18.85482,96.22339 l -172.02724,-0.80529 -8.38596,-93.62126 z"
+       id="path3867"
+       sodipodi:nodetypes="ccccccc" />
+    <rect
+       style="fill:url(#linearGradient2875);fill-opacity:1;stroke:none"
+       id="rect3853"
+       width="338.91357"
+       height="206.41135"
+       x="139.65346"
+       y="358.86807"
+       ry="16.687132" />
     <g
        id="g3925">
       <path

@@ -158,7 +158,7 @@ namespace MyUninstaller7 {
                 RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
                 string fileName = ri.fileName;
                 fileName = fileName.Substring(fileName.LastIndexOf('\\') + 1);
-                toolStripStatusLabel1.Text = "File " + fileName;
+                toolStripStatusLabel1.Text = "Selected entry is stored in " + fileName;
                 installedItemsToolStripMenuItem.Enabled = (ri.record.newItems.Count > 0);
                 viewDeletedToolStripMenuItem.Enabled = (ri.record.deletedItems.Count > 0);
                 renameToolStripMenuItem.Enabled = true;
