@@ -40,11 +40,17 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.installedItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewDeletedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listView1 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.viewDeletedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -56,7 +62,9 @@
             this.toolStripButton1,
             this.toolStripButton2,
             this.toolStripButton3,
-            this.toolStripSeparator1});
+            this.toolStripSeparator1,
+            this.toolStripButton4,
+            this.toolStripButton5});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(380, 25);
@@ -113,14 +121,17 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(109, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(334, 17);
+            this.toolStripStatusLabel1.Spring = true;
             this.toolStripStatusLabel1.Text = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.actionsToolStripMenuItem});
+            this.actionsToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(380, 24);
@@ -179,8 +190,10 @@
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.installedItemsToolStripMenuItem,
             this.viewDeletedToolStripMenuItem,
+            this.toolStripMenuItem2,
+            this.reloadToolStripMenuItem,
             this.editRecordToolStripMenuItem,
-            this.reloadToolStripMenuItem});
+            this.renameToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
             this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.actionsToolStripMenuItem.Text = "&Actions";
@@ -192,6 +205,13 @@
             this.installedItemsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.installedItemsToolStripMenuItem.Text = "&Installed items...";
             this.installedItemsToolStripMenuItem.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
+            // 
+            // viewDeletedToolStripMenuItem
+            // 
+            this.viewDeletedToolStripMenuItem.Name = "viewDeletedToolStripMenuItem";
+            this.viewDeletedToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.viewDeletedToolStripMenuItem.Text = "&View deleted...";
+            this.viewDeletedToolStripMenuItem.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
             // 
             // editRecordToolStripMenuItem
             // 
@@ -206,7 +226,7 @@
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             this.reloadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
             this.reloadToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.reloadToolStripMenuItem.Text = "&Reload";
+            this.reloadToolStripMenuItem.Text = "&Reload records";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
             // listView1
@@ -223,14 +243,57 @@
             this.listView1.TabIndex = 4;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
+            this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
             this.listView1.Resize += new System.EventHandler(this.listView1_Resize);
             // 
-            // viewDeletedToolStripMenuItem
+            // renameToolStripMenuItem
             // 
-            this.viewDeletedToolStripMenuItem.Name = "viewDeletedToolStripMenuItem";
-            this.viewDeletedToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
-            this.viewDeletedToolStripMenuItem.Text = "&View deleted...";
-            this.viewDeletedToolStripMenuItem.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.renameToolStripMenuItem.Text = "&Rename...";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(188, 6);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "&About...";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.ToolTipText = "Rescan Records folder and refresh all logs";
+            this.toolStripButton4.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Text = "toolStripButton5";
+            this.toolStripButton5.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -281,6 +344,12 @@
         private System.Windows.Forms.ToolStripMenuItem editRecordToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem reloadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewDeletedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
     }
 }
 

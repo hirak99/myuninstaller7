@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace MyUninstaller7 {
     public partial class UninstallForm : Form {
@@ -24,20 +25,20 @@ namespace MyUninstaller7 {
             }
         }
         private List<Record> records = new List<Record>();
-        private bool _Installed;
+        private bool _ShowingInstalled;
 
         private List<string> UninstallEntries;
         public UninstallForm(RecordStore.Record rec, bool Installed) {
             InitializeComponent();
-            _Installed = Installed;
-            Text = (Installed ? "Installed Items" : "Deleted Items");
+            _ShowingInstalled = Installed;
+            Text = (Installed ? "Installed items" : "Deleted items");
+            label1.Text = (_ShowingInstalled ? "Installation" : "Deletion") + " log for '" + rec.DisplayName + "':";
             if (!Installed) {
                 for (int i=1; i<toolStrip1.Items.Count; ++i)
                     toolStrip1.Items[i].Visible = false;
-                //toolStripSeparator1.Visible = false;
-                //toolStripButton2.Visible = false;
-                //toolStripButton3.Visible = false;
                 listView1.CheckBoxes = false;
+                button2.Visible = false;
+                button3.Visible = false;
             }
             if (Installed) UninstallEntries = rec.UninstallEntries();
             for (int i = 0; i < 3; ++i)
@@ -61,12 +62,16 @@ namespace MyUninstaller7 {
             foreach (Record rec in records) {
                 int imageIndex = rec.Type;
                 if (!rec.StillExists) imageIndex += 3;
+                // Adding it triggers the Checked
+                bool isChecked = rec.Checked;
                 ListViewItem listItem = listView1.Items.Add(rec.Path, imageIndex);
-                if (!rec.StillExists) rec.Checked = false;
-                else listItem.Checked = rec.Checked;
+                if (!rec.StillExists) isChecked = false;
+                listItem.Checked = isChecked;
+                // The above line should automatically set rec.Checked
+                Debug.Assert(rec.Checked == isChecked);
                 if (!rec.StillExists)
-                    listItem.BackColor = Color.LightGray;
-                else if (rec.Type == 0) listItem.BackColor = Color.GhostWhite;
+                    listItem.ForeColor = Color.LightGray;
+                if (rec.Type == 0) listItem.BackColor = Color.GhostWhite;
                 else if (rec.Type == 1) listItem.BackColor = Color.LightYellow;
                 else listItem.BackColor = Color.WhiteSmoke;
             }

@@ -146,5 +146,42 @@ namespace MyUninstaller7 {
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e) {
             RefreshList();
         }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e) {
+            if (listView1.SelectedIndices.Count == 0) {
+                installedItemsToolStripMenuItem.Enabled = false;
+                viewDeletedToolStripMenuItem.Enabled = false;
+                renameToolStripMenuItem.Enabled = false;
+                toolStripButton5.Enabled = false;
+            }
+            else {
+                RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
+                string fileName = ri.fileName;
+                fileName = fileName.Substring(fileName.LastIndexOf('\\') + 1);
+                toolStripStatusLabel1.Text = "File " + fileName;
+                installedItemsToolStripMenuItem.Enabled = (ri.record.newItems.Count > 0);
+                viewDeletedToolStripMenuItem.Enabled = (ri.record.deletedItems.Count > 0);
+                renameToolStripMenuItem.Enabled = true;
+                toolStripButton5.Enabled = true;
+            }
+        }
+
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e) {
+            RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
+            string newName = ri.record.DisplayName;
+            if (Utils.utils.InputBox("Uninstaller 7", "Rename the record", ref newName) == DialogResult.OK
+                && newName != ri.record.DisplayName) {
+                ri.record.DisplayName = newName;
+                ri.SaveToFile();
+                listView1.SelectedItems[0].Text = newName;
+            }
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
+            string message = "My Uninstaller Version " + Application.ProductVersion;
+            MessageBox.Show(message, "My Uninstaller 7",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
+        }
     }
 }

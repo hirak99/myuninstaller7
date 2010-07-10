@@ -168,6 +168,31 @@
         rkJggg==
 </value>
   </data>
+  <data name="toolStripButton4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAjxJREFUOE+1kl1I
+        02EUxs8sjehO14XoKNACR0Gjbmp0kTmwZo2mFgaLpX0tC21tjnTMQCZFpA7UAmHNiCzE8CM2dc22Yput
+        rU3nbIHQaEpGUdBqW9H29KeLZAxkXfTeHHjPc37nfc57iP7LkTkb2FeDLzdrAomiFl8sW2qeoCMmYUa9
+        WOpwT0FnLMnt+YU9/cD+AUD5FOAo/d+o2lK7OqTBfyKrJfie1AsqUgRFdHH2enH7YvTYMHDFBmySeyJU
+        NlmSd9prYtf67Omwc94u6kjmpyQuBPnb2kNR5RRwzQVQxeCXPncS2xsdkYws/RGJzfImUxzdbuC2Fxh+
+        CxRIjP5UwM3kempFVhq1Jsim0ofNuzXupMEP3J0BRkJAtmBgZEV7xlEt0IfihwyhH7ze5TBHG3atvTw/
+        TPIAj6qM3YY3wJMlwLrIxHfAJBNpZ1/nCuCUTbcUAexM0rQA9M8BmueMSObQ0WErL0cyreecdTl3NHlD
+        ZW2OOF9lj9G+QfFfwIZGx9jMB+DeLHCH8cht8yVIYlPSpbnc9EGBRcW6dSn3W9WegIXxpWeKe5lBSe9/
+        Ap10NWY85V3auaj2WQJrzts+d7wAFMyXFWmCcarz8lMg5dOFJJxqTgNvVL5+lasOjVKds4Qj93yvMwE1
+        o8z2qebjdHTqBh0wV9LBx2qW0LhMFePHV3+Z1FdaqPBFRI+A8iFgL7PK3FtAfuvHJIksXZnZElu3sCrH
+        HrBl7q959Z6fOVXjThIM1WdW/I+q3/4sK0rPy71uAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="toolStripButton5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAI1JREFUOE9jYKAR
+        cACaewaIg6AYxAaJkQwqgTpAmGxANwPquRgY6oH+hOGGbqibkVwAEkNWA9KDFdQbQRTOTwVKx0AwiA3W
+        DJQDgfptED4coLsApwFIrkQ1ACQBNBVsOhEuwHA62HkkGECaF6DpgOhARHEeRenAD2gUKKRBGMQmC5Dt
+        AgeozRRnJoLOBgCEcFJaZL08QwAAAABJRU5ErkJggg==
+</value>
+  </data>
   <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>122, 17</value>
   </metadata>

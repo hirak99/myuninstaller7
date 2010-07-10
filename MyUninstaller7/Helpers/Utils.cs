@@ -11,6 +11,12 @@ using System.Drawing;
 using System.Drawing.Imaging;
 
 namespace MyUninstaller7 {
+    // This will not be required in dotNet 4.0
+    class MyTuple<T1, T2> {
+        public T1 Item1;
+        public T2 Item2;
+        public MyTuple(T1 _Item1, T2 _Item2) { Item1=_Item1; Item2=_Item2;}
+    }
     class Utils {
         private Utils() { }
         private string appFolder=null;
