@@ -87,7 +87,8 @@ namespace MyUninstaller7 {
             listView1.Items.Clear();
             foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
                 listView1.Items.Add(ri.record.DisplayName);
-                listView1.Items[listView1.Items.Count - 1].BackColor = ri.record.color;
+                if (ri.record.color.HasValue)
+                    listView1.Items[listView1.Items.Count - 1].BackColor = ri.record.color.Value;
             }
             if (listView1.Items.Count > 0) listView1.Items[0].Selected = true;
             if (listView1.Items.Count == index) index--;
@@ -173,6 +174,11 @@ namespace MyUninstaller7 {
             RefreshList();
         }
 
+        private void SetToolColorTo(Color color) {
+            Image icon = Utils.utils.ColorIcon(color);
+            toolStripButton7.Image = icon;
+        }
+
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0 || State == 1) {
                 installedItemsToolStripMenuItem.Enabled = false;
@@ -181,6 +187,10 @@ namespace MyUninstaller7 {
                 editRecordToolStripMenuItem.Enabled = false;
                 toolStripButton5.Enabled = false;
                 toolStripButton6.Enabled = false;
+                SetToolColorTo(Color.Gray);
+                toolStripButton7.Enabled = false;
+                selectcolorToolStripMenuItem.Enabled = false;
+                deleteRecordToolStripMenuItem.Enabled = false;
             }
             else {
                 RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
@@ -193,6 +203,10 @@ namespace MyUninstaller7 {
                 editRecordToolStripMenuItem.Enabled = true;
                 toolStripButton5.Enabled = true;
                 toolStripButton6.Enabled = (ri.record.newItems.Count > 0);
+                SetToolColorTo(listView1.SelectedItems[0].BackColor);
+                toolStripButton7.Enabled = true;
+                selectcolorToolStripMenuItem.Enabled = true;
+                deleteRecordToolStripMenuItem.Enabled = true;
             }
         }
 
@@ -223,6 +237,17 @@ namespace MyUninstaller7 {
                 MessageBoxIcon.Question) == DialogResult.OK) {
                     File.Delete(ri.fileName);
                     RefreshList();
+            }
+        }
+
+        private void selectcolorToolStripMenuItem_Click(object sender, EventArgs e) {
+            RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
+            Color? result = ColorChooser.Choose();
+            if (result != null) {
+                ri.record.color = (result.Value.IsSystemColor ? null : result);
+                listView1.SelectedItems[0].BackColor = result.Value;
+                ri.SaveToFile();
+                SetToolColorTo(result.Value);
             }
         }
     }

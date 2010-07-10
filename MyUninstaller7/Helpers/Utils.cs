@@ -10,6 +10,7 @@ using System.Security.Principal;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Diagnostics;
+using System.Drawing.Drawing2D;
 
 namespace MyUninstaller7 {
     // This will not be required in dotNet 4.0
@@ -172,7 +173,36 @@ namespace MyUninstaller7 {
             //bmp.UnlockBits(bmpdata);
             return bmp;
         }
-        
+        public Color ColorBlend(Color color1, Color color2, double t) {
+            return Color.FromArgb(
+                (int)(color1.R * (1 - t) + color2.R * t),
+                (int)(color1.G * (1 - t) + color2.G * t),
+                (int)(color1.B * (1 - t) + color2.B * t));
+        }
+        public Image ColorIcon(Color color) {
+            const int size = 16;
+            Color maxDark = ColorBlend(color, Color.Black, 0.1);
+            color = ColorBlend(color, Color.White, 0.05);
+            Bitmap bmp = new Bitmap(size, size);
+            int margin = 2;
+            for (int i = 0; i < bmp.Width; ++i)
+                for (int j = 0; j < bmp.Height; ++j) {
+                    Color c;
+                    if (i < margin || i >= size - margin || j < margin || j >= size - margin)
+                        c = Color.Magenta;
+                    else {
+                        double dist = (double)(i + j - size + 1) / (size - 1);
+                        // dist varies from -1 to 1 from topleft to bottomright
+                        double dark = (dist + 1)/2;
+                        if (dark < 0) dark = 0;
+                        else if (dark > 1) dark = 1;
+                        c = ColorBlend(color, maxDark, dark);
+                    }
+                    bmp.SetPixel(i, j, c);
+                }
+            return bmp;
+        }
+
         public static Utils utils = new Utils();
 
         internal string parentPath(string p) {

@@ -14,7 +14,8 @@ namespace MyUninstaller7 {
         public class Record {
             public string DisplayName;
             public DateTime dateTime;
-            public Color color;
+            // Default value of color is set in RecordStore.CreateRecord
+            public Color? color;
             public List<string> newItems, deletedItems;
             // Returns list of entries with uninstallation information in this record
             public List<string> UninstallEntries() {
@@ -60,7 +61,9 @@ namespace MyUninstaller7 {
                 rec.DisplayName = afterSpace(inStream.ReadLine());
                 string datetime = afterSpace(inStream.ReadLine());
                 rec.dateTime = DateTime.Parse(datetime);
-                rec.color = ColorTranslator.FromHtml(afterSpace(inStream.ReadLine()));
+                string colorStr = afterSpace(inStream.ReadLine());
+                if (colorStr.Trim().Length == 0) rec.color = null;
+                else rec.color = ColorTranslator.FromHtml(colorStr);
                 while (true) {
                     string line = inStream.ReadLine();
                     if (line == null) return null;
@@ -81,7 +84,7 @@ namespace MyUninstaller7 {
             public void SaveTo(TextWriter outStream) {
                 outStream.WriteLine("Title: " + DisplayName);
                 outStream.WriteLine("Datetime: " + dateTime.ToString("yyyy MMM dd hh:mm:ss.ffff tt"));
-                outStream.WriteLine("Color: " + ColorTranslator.ToHtml(color));
+                outStream.WriteLine("Color: " + (color.HasValue?ColorTranslator.ToHtml(color.Value):""));
                 outStream.WriteLine("\n" + strLineBeforeData);
                 foreach (string item in newItems)
                     outStream.WriteLine("A\t" + item);
@@ -126,7 +129,7 @@ namespace MyUninstaller7 {
             record.dateTime = DateTime.Now;
             record.newItems = new List<string>(newItems);
             record.deletedItems = new List<string>(deletedItems);
-            record.color = Color.FromArgb(196, 255, 196);
+            record.color = null; // Color.FromArgb(196, 255, 196);
             record.DisplayName = record.SuggestDisplayName();
             return record;
         }
