@@ -24,9 +24,6 @@
 0	HKLM\SYSTEM\
 
 2	C:\
-1	C:\Documents and Settings\
-0	C:\Documents and Settings\Arnab\Local Settings\
-0	C:\Documents and Settings\Arnab\Recent\
 1	%ProgramFiles(x86)%\
 1	%ProgramFiles%\
 1	%ProgramData%\
@@ -40,5 +37,3 @@
 1	%windir%\
 0	%windir%\Prefetch\
 0	%windir%\ServiceProfiles\LocalService\AppData\Roaming\PeerNetworking\
-2	D:\
-2	E:\

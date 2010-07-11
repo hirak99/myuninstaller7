@@ -4,3 +4,4 @@ syntax: glob
 obj\*
 bin\*
 *.orig
+Thumbs.db
