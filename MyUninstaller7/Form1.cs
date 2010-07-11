@@ -231,6 +231,7 @@ namespace MyUninstaller7 {
                 toolStripButton7.Enabled = true;
                 selectcolorToolStripMenuItem.Enabled = true;
                 deleteRecordToolStripMenuItem.Enabled = true;
+                string s = ri.record.SuggestDisplayName();
             }
         }
 

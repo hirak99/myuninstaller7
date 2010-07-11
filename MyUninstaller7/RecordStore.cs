@@ -22,15 +22,19 @@ namespace MyUninstaller7 {
                 List<string> regEntries = new List<string>();
                 string[] RegUninRegEx = new string[]{
                 @"^HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\.*$",
-                @"^HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Installer\\UserData\\[^\\]*\\Products\\[^\\]*\\$"
+                @"^HKLM\\SOFTWARE\\Wow6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\.*$",
+                @"^HKLM\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Installer\\UserData\\[^\\]*\\Products\\[^\\]*\\$",
             };
                 // If more locations are added, they must be handled in the foreach below manually. The following check serves as a reminder.
-                Debug.Assert(RegUninRegEx.Length == 2);
+                Debug.Assert(RegUninRegEx.Length == 3);
                 foreach (string path in newItems) {
                     if (Regex.Match(path, RegUninRegEx[0], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
                         regEntries.Add(path);
                     }
                     else if (Regex.Match(path, RegUninRegEx[1], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
+                        regEntries.Add(path);
+                    }
+                    else if (Regex.Match(path, RegUninRegEx[2], RegexOptions.Multiline | RegexOptions.IgnoreCase).Success) {
                         regEntries.Add(path + "InstallProperties\\");
                     }
                 }
