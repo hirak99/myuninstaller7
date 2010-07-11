@@ -25,7 +25,7 @@ namespace MyUninstaller7 {
                 Directory.CreateDirectory(recordStoreDir);
             }
             listView1_Resize(this, null);
-            RefreshList();
+            PopulateItems();
             SetState(0);
         }
 
@@ -85,7 +85,7 @@ namespace MyUninstaller7 {
                 " appliations.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void RefreshList() {
+        private void PopulateItems() {
             int index;
             if (listView1.SelectedIndices.Count == 0) index = 0;
             else index = listView1.SelectedIndices[0];
@@ -127,7 +127,7 @@ namespace MyUninstaller7 {
                             ri.record.DisplayName = recordName;
                             ri.SaveToFile();
                         }
-                    RefreshList();
+                    PopulateItems();
                 }
             }
         }
@@ -177,7 +177,7 @@ namespace MyUninstaller7 {
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e) {
-            RefreshList();
+            PopulateItems();
         }
 
         private void SetToolColorTo(Color color) {
@@ -242,7 +242,7 @@ namespace MyUninstaller7 {
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question) == DialogResult.OK) {
                     File.Delete(ri.fileName);
-                    RefreshList();
+                    PopulateItems();
             }
         }
 
