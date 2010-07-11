@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
-using System.Security.Principal;
 using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Microsoft.Win32;
 
 namespace MyUninstaller7 {
     public partial class Form1 : Form {
+        private IniFile ini = new IniFile(Utils.utils.ExeFolder() + "myuninstaller.ini");
         public Form1() {
             InitializeComponent();
             EnsureCatalog();
@@ -24,9 +20,10 @@ namespace MyUninstaller7 {
             if (!Directory.Exists(recordStoreDir)) {
                 Directory.CreateDirectory(recordStoreDir);
             }
+            AddToStartup(false);
             listView1_Resize(this, null);
             PopulateItems();
-            SetState(0);
+            SetState(ini.ReadInt("Uninstaller7", "IsNotingChanges", 0));
         }
 
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
@@ -66,6 +63,7 @@ namespace MyUninstaller7 {
             cancelNotingChangesToolStripMenuItem.Enabled = (State == 1);
             if (State == 0) toolStripStatusLabel1.Text = "Ready.";
             else toolStripStatusLabel1.Text = "Noting changes.";
+            ini.WriteInt("Uninstaller7", "IsNotingChanges", State);
         }
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
@@ -144,6 +142,17 @@ namespace MyUninstaller7 {
             Close();
         }
 
+        private void AddToStartup(bool add) {
+            using (RegistryKey rk = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true)) {
+                if (add)
+                    rk.SetValue("MyUninstaller7", "\"" + Application.ExecutablePath + "\"");
+                else {
+                    try {
+                        rk.DeleteValue("MyUninstaller7");
+                    } catch (ArgumentException) { }
+                }
+            }
+        }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e) {
             if (State == 0) {
                 try {
@@ -153,6 +162,15 @@ namespace MyUninstaller7 {
                     MessageBox.Show("Could perform deletion of the state files. There could be a problem. Please check.\n" + ex.Message,
                         "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
+            }
+            else if (e.CloseReason == CloseReason.WindowsShutDown) {
+                AddToStartup(true);
+            }
+            else {
+                if (MessageBox.Show("Uninstaller is already noting changes - it will resume when you start next time.",
+                    "Uninstaller 7",
+                    MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Information) == DialogResult.Cancel) e.Cancel = true;
             }
         }
 

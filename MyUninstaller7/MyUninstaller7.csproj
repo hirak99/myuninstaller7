@@ -122,6 +122,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="RecordStore.cs" />
+    <Compile Include="resources\IniFile.cs" />
     <Compile Include="StateComparer.cs" />
     <Compile Include="StateSaver.cs" />
     <Compile Include="SaveStateForm.cs">
