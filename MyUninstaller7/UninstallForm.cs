@@ -16,14 +16,14 @@ namespace MyUninstaller7 {
         private class Record {
             public string Path;
             public bool StillExists;
-            // 0 - RegKey, 1 - Folder, 2 - File
+            // 0 - RegKey, 1 - RegValue, 2 - Folder, 3 - File
             public int Type;
             public bool Checked = true;
             public Record(string path) {
                 Path = path;
                 if (Utils.utils.IsRegistry(path)) Type = 0;
-                else if (path[path.Length - 1] == '\\') Type = 1;
-                else Type = 2;
+                else Type=2;
+                if (path[path.Length - 1] != '\\') Type += 1;
             }
         }
         private List<Record> records = new List<Record>();
@@ -43,7 +43,7 @@ namespace MyUninstaller7 {
                 button2.Visible = false;
                 button3.Visible = false;
             }
-            for (int i = 0; i < 3; ++i)
+            for (int i = 0; i < 4; ++i)
                 imageList1.Images.Add(Utils.utils.FadeImage((Image)imageList1.Images[i].Clone()));
             foreach (string s in (Installed ? rec.newItems : rec.deletedItems))
                 records.Add(new Record(s));
@@ -71,9 +71,14 @@ namespace MyUninstaller7 {
             foreach (Record record in records) {
                 if (!record.Checked) continue;
                 stream.WriteLine("echo Removing " + record.Path);
-                if (record.Type==0) stream.WriteLine("reg delete /f " + record.Path);
-                else if (record.Type==1) stream.WriteLine("rmdir /s /q \"" + record.Path + "\"");
-                else if (record.Type==2) stream.WriteLine("del /f \"" + record.Path + "\"");
+                if (record.Type == 0) stream.WriteLine("reg delete \"" + record.Path.Substring(0, record.Path.Length - 1) + "\" /f");
+                else if (record.Type == 1) {
+                    string parent = Utils.utils.parentPath(record.Path);
+                    string valueName = record.Path.Substring(parent.Length);
+                    stream.WriteLine("reg delete \"" + parent.Substring(0, parent.Length - 1) + "\" /v \"" + valueName + "\" /f");
+                }
+                else if (record.Type == 2) stream.WriteLine("rmdir /s /q \"" + record.Path + "\"");
+                else if (record.Type == 3) stream.WriteLine("del /f \"" + record.Path + "\"");
             }
             stream.WriteLine("echo.");
             stream.WriteLine("echo Done!");
@@ -150,12 +155,22 @@ namespace MyUninstaller7 {
                     }
                 }
                 else if (record.Type == 1) {
-                    try {
-                        Directory.Delete(record.Path, true);
+                    string parent = Utils.utils.parentPath(record.Path);
+                    string valueName = record.Path.Substring(parent.Length);
+                    RegistryKey rk = Utils.utils.OpenRegKey(parent, true);
+                    if (rk != null) {
+                        try {
+                            rk.DeleteValue(valueName);
+                        } catch (Exception) { }
+                        rk.Close();
                     }
-                    catch { }
                 }
                 else if (record.Type == 2) {
+                    try {
+                        Directory.Delete(record.Path, true);
+                    } catch { }
+                }
+                else if (record.Type == 3) {
                     File.Delete(record.Path);
                 }
             }
@@ -180,7 +195,7 @@ namespace MyUninstaller7 {
             listView1.Items.Clear();
             foreach (Record rec in records) {
                 int imageIndex = rec.Type;
-                if (!rec.StillExists) imageIndex += 3;
+                if (!rec.StillExists) imageIndex += 4;
                 // Adding it triggers the Checked
                 bool isChecked = rec.Checked;
                 ListViewItem listItem = listView1.Items.Add(rec.Path, imageIndex);
@@ -189,9 +204,9 @@ namespace MyUninstaller7 {
                 // The above line does not automatically set rec.Checked
                 rec.Checked = isChecked;
                 if (!rec.StillExists)
-                    listItem.ForeColor = Color.LightGray;
+                    listItem.ForeColor = Color.Gray;
                 if (rec.Type == 0) listItem.BackColor = Color.GhostWhite;
-                else if (rec.Type == 1) listItem.BackColor = Color.LightYellow;
+                else if (rec.Type == 2) listItem.BackColor = Color.LightYellow;
                 else listItem.BackColor = Color.White;
             }
             columnHeader1.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);

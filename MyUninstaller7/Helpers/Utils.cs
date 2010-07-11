@@ -58,12 +58,24 @@ namespace MyUninstaller7 {
         }
         public bool Exists(string item) {
             if (IsRegistry(item)) {
-                RegistryKey rk = OpenRegKey(item);
-                if (rk != null) {
-                    rk.Close();
-                    return true;
+                if (item[item.Length - 1] == '\\') {
+                    RegistryKey rk = OpenRegKey(item);
+                    if (rk != null) {
+                        rk.Close();
+                        return true;
+                    }
+                    else return false;
                 }
-                else return false;
+                else {
+                    string parent = Utils.utils.parentPath(item);
+                    string valueName = item.Substring(parent.Length);
+                    RegistryKey rk = OpenRegKey(parent);
+                    if (rk != null) {
+                        return rk.GetValueNames().Contains(valueName);
+                        rk.Close();
+                    }
+                    else return false;
+                }
             }
             else {
                 if (item[item.Length - 1] == '\\')
@@ -167,7 +179,7 @@ namespace MyUninstaller7 {
             for (int x = 0; x < bmp.Width; ++x)
                 for (int y = 0; y < bmp.Height; ++y) {
                     Color c = bmp.GetPixel(x, y);
-                    c = Color.FromArgb(c.A / 3, c);
+                    c = Color.FromArgb(c.A / 2, c);
                     bmp.SetPixel(x, y, c);
                 }
             //bmp.UnlockBits(bmpdata);

@@ -67,8 +67,9 @@
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList1.Images.SetKeyName(0, "regkey.png");
-            this.imageList1.Images.SetKeyName(1, "folder.png");
-            this.imageList1.Images.SetKeyName(2, "file.png");
+            this.imageList1.Images.SetKeyName(1, "file.png");
+            this.imageList1.Images.SetKeyName(2, "folder.png");
+            this.imageList1.Images.SetKeyName(3, "file.png");
             // 
             // toolStrip1
             // 
@@ -89,7 +90,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(46, 22);
+            this.toolStripButton1.Size = new System.Drawing.Size(48, 22);
             this.toolStripButton1.Text = "&Rescan";
             this.toolStripButton1.ToolTipText = "Rescan all items to check if they still exist";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
@@ -105,7 +106,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(66, 22);
+            this.toolStripButton2.Size = new System.Drawing.Size(73, 22);
             this.toolStripButton2.Text = "Make &Script";
             this.toolStripButton2.ToolTipText = "Create a basic .cmd uninstallation script";
             this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
@@ -116,7 +117,7 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(51, 22);
+            this.toolStripButton3.Size = new System.Drawing.Size(57, 22);
             this.toolStripButton3.Text = "&Uninstall";
             this.toolStripButton3.ToolTipText = "Begin the uninstallation process";
             this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
