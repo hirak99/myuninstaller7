@@ -130,7 +130,9 @@ namespace MyUninstaller7 {
             if (nativeProcessRan) PopulateItems();
             // Now that the native uninstallation is taken care of, here begins the removal of entries part
             if (records.All(a => !a.Checked)) {
-                MessageBox.Show("There is nothing remaining to uninstall.",
+                MessageBox.Show("There is nothing " 
+                    + (records.Any(a => a.StillExists)?"marked":"remaining")
+                    + " to uninstall.",
                     "Uninstaller 7",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
@@ -175,11 +177,17 @@ namespace MyUninstaller7 {
                 }
             }
             PopulateItems();
-            bool remaining = records.All(a => !a.Checked);
-            MessageBox.Show(remaining ? "Some items are still remaining!" : "Uninstallation has completed successfully.",
-                "Uninstaller 7",
-                MessageBoxButtons.OK,
-                remaining ? MessageBoxIcon.Asterisk : MessageBoxIcon.Information);
+            string finalMsg;
+            MessageBoxIcon finalIcon = MessageBoxIcon.Information;
+            if (records.Any(a => a.StillExists)) {
+                if (records.Any(a => a.Checked && a.StillExists)) {
+                    finalIcon = MessageBoxIcon.Warning;
+                    finalMsg = "Some of the checked items are still remaining.";
+                }
+                else finalMsg = "All checked items have been uninstalled successfully, but the unchecked items are still present.";
+            }
+            else finalMsg = "This software has been uninstalled completely.";
+            MessageBox.Show(finalMsg, "Uninstaller 7", MessageBoxButtons.OK, finalIcon);
         }
 
         // This scans for existance, sorts, and populates the list view

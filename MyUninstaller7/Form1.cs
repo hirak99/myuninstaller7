@@ -5,6 +5,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
+using System.Threading;
 
 namespace MyUninstaller7 {
     public partial class Form1 : Form {
@@ -14,13 +15,13 @@ namespace MyUninstaller7 {
             EnsureCatalog();
             if (!Utils.utils.IsUserAdministrator()) {
                 MessageBox.Show("It is preferred that you run this program as Admin. " +
-                    "Please restart with Admin mode if you have the privelege. Not all changes will be detected otherwise.",
-                    "Info", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "Please restart with Admin mode if you have the privelege. All changes may not be detected otherwise.",
+                    "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             if (!Directory.Exists(recordStoreDir)) {
                 Directory.CreateDirectory(recordStoreDir);
             }
-            AddToStartup(false);
+            AddToStartup(true);
             listView1_Resize(this, null);
             PopulateItems();
             SetState(ini.ReadInt("Uninstaller7", "IsNotingChanges", 0));

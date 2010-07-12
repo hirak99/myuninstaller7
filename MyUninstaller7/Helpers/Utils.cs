@@ -71,8 +71,9 @@ namespace MyUninstaller7 {
                     string valueName = item.Substring(parent.Length);
                     RegistryKey rk = OpenRegKey(parent);
                     if (rk != null) {
-                        return rk.GetValueNames().Contains(valueName);
+                        bool result = rk.GetValueNames().Contains(valueName);
                         rk.Close();
+                        return result;
                     }
                     else return false;
                 }
