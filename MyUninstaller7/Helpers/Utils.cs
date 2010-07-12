@@ -242,9 +242,17 @@ namespace MyUninstaller7 {
     class GZipReader : IDisposable {
         private GZipStream gzs;
         private TextReader sr;
+        private FileStream fstream;
         public GZipReader(string inFile) {
-            gzs = new GZipStream(File.OpenRead(inFile), CompressionMode.Decompress);
+            fstream = File.OpenRead(inFile);
+            gzs = new GZipStream(fstream, CompressionMode.Decompress);
             sr = new StreamReader(gzs);
+        }
+        public long Position {
+            get { return fstream.Position; }
+        }
+        public long Length {
+            get { return fstream.Length; }
         }
         public TextReader Reader {
             get { return sr; }
@@ -252,6 +260,7 @@ namespace MyUninstaller7 {
         public void Dispose() {
             sr.Close();
             gzs.Close();
+            fstream.Close();
         }
     }
 }

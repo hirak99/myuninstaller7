@@ -99,6 +99,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="StateComparerProgress.resx">
+      <DependentUpon>StateComparerProgress.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StateSaverProgress.resx">
       <DependentUpon>StateSaverProgress.cs</DependentUpon>
     </EmbeddedResource>
@@ -124,6 +127,12 @@
     <Compile Include="RecordStore.cs" />
     <Compile Include="helpers\IniFile.cs" />
     <Compile Include="StateComparer.cs" />
+    <Compile Include="StateComparerProgress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StateComparerProgress.Designer.cs">
+      <DependentUpon>StateComparerProgress.cs</DependentUpon>
+    </Compile>
     <Compile Include="StateSaver.cs" />
     <Compile Include="StateSaverProgress.cs">
       <SubType>Form</SubType>

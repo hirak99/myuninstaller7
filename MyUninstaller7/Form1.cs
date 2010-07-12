@@ -25,6 +25,13 @@ namespace MyUninstaller7 {
             listView1_Resize(this, null);
             PopulateItems();
             SetState(ini.ReadInt("Uninstaller7", "IsNotingChanges", 0));
+
+            /* Debugging code to test comparison speed
+            MessageBox.Show("Click ok to start comparing");
+            string _stateFile1 = Utils.utils.ExeFolder() + @"_state1.txt.gz";
+            string _stateFile2 = Utils.utils.ExeFolder() + @"_state2.txt.gz";
+            StateComparerProgress.CompareStateWithProgress(_stateFile1, _stateFile2);
+            MessageBox.Show("Done comparing");*/
         }
 
         private string stateFile1 = Utils.utils.ExeFolder() + @"state1.txt.gz";
@@ -112,10 +119,8 @@ namespace MyUninstaller7 {
         private void toolStripButton2_Click(object sender, EventArgs e) {
             if (StateSaverProgress.SaveStateWithProgress(stateFile2)) {
                 SetState(0);
-                toolStripStatusLabel1.Text = "Comparing...";
                 //TODO: Comparison of the states goes here
-                StateComparer sc = new StateComparer();
-                sc.Compare(stateFile1, stateFile2);
+                StateComparer sc = StateComparerProgress.CompareStateWithProgress(stateFile1, stateFile2);
                 if (sc.onlyIn1.Count == 0 && sc.onlyIn2.Count == 0) {
                     MessageBox.Show("No change was detected.", "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }

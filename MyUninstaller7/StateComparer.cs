@@ -5,9 +5,9 @@ using System.Text;
 using System.IO;
 
 namespace MyUninstaller7 {
-    class StateComparer {
+    public class StateComparer {
         public List<string> onlyIn1, onlyIn2;
-        public void Compare(string file1, string file2) {
+        public void Compare(string file1, string file2, Action<int,object> Report) {
             List<string>[] record = new List<string>[] { new List<string>(), new List<string>() };
             using (GZipReader gzr1 = new GZipReader(file1))
             using (GZipReader gzr2 = new GZipReader(file2)) {
@@ -16,7 +16,14 @@ namespace MyUninstaller7 {
                 string[] line = new string[2];
                 line[0] = sr[0].ReadLine();
                 line[1] = sr[1].ReadLine();
+                // how many comparisons to make before updating the progress
+                // if i could get number of lines, i could set it to nLines/100 to perfoem exactly 100 updates
+                long reportResolution = gzr2.Length/1000;
+                if (reportResolution < 1) reportResolution = 1;
+                long comparisons = 0;
                 while (true) {
+                    if ((comparisons++)%reportResolution==0)
+                        Report(0, new MyTuple<long, long>(gzr2.Position, gzr2.Length));
                     if (line[0] == null && line[1] == null) break;
                     if (line[0] == line[1]) {
                         line[0] = sr[0].ReadLine();
