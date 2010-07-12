@@ -99,8 +99,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SaveStateForm.resx">
-      <DependentUpon>SaveStateForm.cs</DependentUpon>
+    <EmbeddedResource Include="StateSaverProgress.resx">
+      <DependentUpon>StateSaverProgress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UninstallForm.resx">
       <DependentUpon>UninstallForm.cs</DependentUpon>
@@ -125,11 +125,11 @@
     <Compile Include="helpers\IniFile.cs" />
     <Compile Include="StateComparer.cs" />
     <Compile Include="StateSaver.cs" />
-    <Compile Include="SaveStateForm.cs">
+    <Compile Include="StateSaverProgress.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SaveStateForm.Designer.cs">
-      <DependentUpon>SaveStateForm.cs</DependentUpon>
+    <Compile Include="StateSaverProgress.Designer.cs">
+      <DependentUpon>StateSaverProgress.cs</DependentUpon>
     </Compile>
     <Compile Include="helpers\Utils.cs" />
     <Compile Include="UninstallForm.cs">

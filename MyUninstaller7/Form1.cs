@@ -104,14 +104,15 @@ namespace MyUninstaller7 {
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e) {
-            if (SaveStateForm.SaveStateWithProgress(Utils.utils.ExeFolder() + @"state1.txt.gz"))
+            if (StateSaverProgress.SaveStateWithProgress(Utils.utils.ExeFolder() + @"state1.txt.gz"))
                 SetState(1);
             else toolStripStatusLabel1.Text = "Cancelled noting changes.";
         }
 
         private void toolStripButton2_Click(object sender, EventArgs e) {
-            if (SaveStateForm.SaveStateWithProgress(stateFile2)) {
+            if (StateSaverProgress.SaveStateWithProgress(stateFile2)) {
                 SetState(0);
+                toolStripStatusLabel1.Text = "Comparing...";
                 //TODO: Comparison of the states goes here
                 StateComparer sc = new StateComparer();
                 sc.Compare(stateFile1, stateFile2);

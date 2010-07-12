@@ -1,5 +1,5 @@
 ﻿namespace MyUninstaller7 {
-    partial class SaveStateForm {
+    partial class StateSaverProgress {
         /// <summary>
         /// Required designer variable.
         /// </summary>

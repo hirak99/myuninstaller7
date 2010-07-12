@@ -8,14 +8,14 @@ using System.Text;
 using System.Windows.Forms;
 
 namespace MyUninstaller7 {
-    public partial class SaveStateForm : Form {
+    public partial class StateSaverProgress : Form {
         public bool result = false;
         private StateSaver saveState;
-        private SaveStateForm() {
+        private StateSaverProgress() {
             InitializeComponent();
         }
         public static bool SaveStateWithProgress(string outFile) {
-            SaveStateForm form = new SaveStateForm();
+            StateSaverProgress form = new StateSaverProgress();
             form.saveState = new StateSaver(outFile);
             form.backgroundWorker1.RunWorkerAsync();
             form.ShowDialog();
