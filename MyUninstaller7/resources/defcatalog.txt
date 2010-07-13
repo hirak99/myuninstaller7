@@ -3,7 +3,8 @@
 # 1 - include with recursion
 # 2 - include without recursion
 
-1	HKCU
+1	HKCU\
+0	HKCU\Remote\		
 0	HKCU\Software\Classes\Local Settings\
 0	HKCU\Software\Microsoft\EventSystem\
 0	HKCU\Software\Microsoft\Internet Explorer\
@@ -16,21 +17,24 @@
 0	HKCU\Software\Microsoft\Windows\ShellNoRoam\
 1	HKLM\
 0	HKLM\COMPONENTS\
+0	HKLM\HARDWARE\
 0	HKLM\Schema\
 0	HKLM\Software\Microsoft\EventSystem\
 0	HKLM\SOFTWARE\Microsoft\Fusion\NativeImagesIndex\
 0	HKLM\Software\Microsoft\Protected Storage System Provider\
 0	HKLM\SOFTWARE\Microsoft\RADAR\
-0	HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\
+0	HKLM\SOFTWARE\Microsoft\WBEM\WDM\
+0	HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\SideBySide
+0	HKLM\SOFTWARE\Microsoft\Windows Media Player NSS
 0	HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore\Volatile\
 0	HKLM\SYSTEM\
 
-2	C:\
 1	%ProgramFiles(x86)%\
 1	%ProgramFiles%\
 1	%ProgramData%\
 0	%ProgramData%\Microsoft\eHome\
 0	%ProgramData%\Microsoft\Microsoft Antimalware\
+0	%ProgramData%\Microsoft\RAC\
 0	%ProgramData%\Microsoft\Search\
 1	%HOMEDRIVE%%HOMEPATH%\
 0	%HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\Windows\Temporary Internet Files\

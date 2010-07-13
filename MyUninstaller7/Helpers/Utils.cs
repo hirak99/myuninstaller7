@@ -74,22 +74,18 @@ namespace MyUninstaller7 {
         public bool Exists(string item) {
             EItemType type = GetType(item);
             if (type == EItemType.RegistryKey) {
-                RegistryKey rk = OpenRegKey(item);
-                if (rk != null) {
-                    rk.Close();
-                    return true;
+                using (RegistryKey rk = OpenRegKey(item)) {
+                    if (rk != null) return true;
+                    else return false;
                 }
-                else return false;
             }
             else if (type == EItemType.RegistryValue) {
                 MyTuple<string, string> split = Utils.utils.SplitParent(item);
-                RegistryKey rk = OpenRegKey(split.Item1);
-                if (rk != null) {
-                    bool result = rk.GetValueNames().Contains(split.Item2);
-                    rk.Close();
-                    return result;
+                using (RegistryKey rk = OpenRegKey(split.Item1)) {
+                    if (rk != null)
+                        return rk.GetValueNames().Contains(split.Item2);
+                    else return false;
                 }
-                else return false;
             }
             if (type == EItemType.Folder)
                 return Directory.Exists(item);

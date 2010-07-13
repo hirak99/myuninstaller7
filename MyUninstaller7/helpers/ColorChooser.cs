@@ -13,9 +13,10 @@ namespace MyUninstaller7 {
             InitializeComponent();
         }
         public static Color? Choose() {
-            ColorChooser colorPicker = new ColorChooser();
-            colorPicker.ShowDialog();
-            return colorPicker.ColorClicked;
+            using (ColorChooser colorPicker = new ColorChooser()) {
+                colorPicker.ShowDialog();
+                return colorPicker.ColorClicked;
+            }
         }
 
         // Given H,S,L in range of 0-1

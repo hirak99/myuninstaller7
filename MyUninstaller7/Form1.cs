@@ -79,8 +79,9 @@ namespace MyUninstaller7 {
             if (File.Exists(catfile)) return;
             using (StreamWriter sw = new StreamWriter(catfile)) {
                 sw.Write(MyUninstaller7.Properties.Resources.defcatalog);
+                sw.WriteLine();
                 foreach (string drive in Environment.GetLogicalDrives())
-                    if (drive[0]!='C' && GetDriveType(drive) == 3) sw.WriteLine("2\t" + drive);
+                    if (GetDriveType(drive) == 3) sw.WriteLine("2\t" + drive);
             }
             MessageBox.Show("The catalog file 'defcatalog.txt' was automatically created in" +
                 "application folder. You can" +

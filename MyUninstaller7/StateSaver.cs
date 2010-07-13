@@ -96,7 +96,7 @@ namespace MyUninstaller7 {
             } catch (IOException) {
                 return;
             }
-            if (nDepth++ <= 1) ReportProgress(path);
+            if (nDepth++ <= 2) ReportProgress(path);
             StoreItem(path);
             Array.Sort(files);
             foreach (string file in files) StoreItem(file);
