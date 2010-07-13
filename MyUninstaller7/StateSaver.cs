@@ -63,7 +63,8 @@ namespace MyUninstaller7 {
             try {
                 string[] valueNames = rk.GetValueNames();
                 foreach (string name in valueNames) {
-                    if (name!="") StoreItem(fullpath + name);
+                    // value names are stored separated with @"\\"
+                    if (name!="") StoreItem(fullpath + @"\" + name);
                 }
             } catch (UnauthorizedAccessException) { }
             try {

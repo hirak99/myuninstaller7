@@ -16,14 +16,11 @@ namespace MyUninstaller7 {
         private class Record {
             public string Path;
             public bool StillExists;
-            // 0 - RegKey, 1 - RegValue, 2 - Folder, 3 - File
-            public int Type;
+            public EItemType Type;
             public bool Checked = true;
             public Record(string path) {
                 Path = path;
-                if (Utils.utils.IsRegistry(path)) Type = 0;
-                else Type=2;
-                if (path[path.Length - 1] != '\\') Type += 1;
+                Type = Utils.utils.GetType(path);
             }
         }
         private List<Record> records = new List<Record>();
@@ -71,14 +68,13 @@ namespace MyUninstaller7 {
             foreach (Record record in records) {
                 if (!record.Checked) continue;
                 stream.WriteLine("echo Removing " + record.Path);
-                if (record.Type == 0) stream.WriteLine("reg delete \"" + record.Path.Substring(0, record.Path.Length - 1) + "\" /f");
-                else if (record.Type == 1) {
-                    string parent = Utils.utils.parentPath(record.Path);
-                    string valueName = record.Path.Substring(parent.Length);
-                    stream.WriteLine("reg delete \"" + parent.Substring(0, parent.Length - 1) + "\" /v \"" + valueName + "\" /f");
+                if (record.Type == EItemType.RegistryKey) stream.WriteLine("reg delete \"" + record.Path.Substring(0, record.Path.Length - 1) + "\" /f");
+                else if (record.Type == EItemType.RegistryValue) {
+                    MyTuple<string, string> split = Utils.utils.SplitParent(record.Path);
+                    stream.WriteLine("reg delete \"" + split.Item1.Substring(0, split.Item1.Length - 1) + "\" /v \"" + split.Item2.Replace(@"\", @"\\") + "\" /f");
                 }
-                else if (record.Type == 2) stream.WriteLine("rmdir /s /q \"" + record.Path + "\"");
-                else if (record.Type == 3) stream.WriteLine("del /f \"" + record.Path + "\"");
+                else if (record.Type == EItemType.Folder) stream.WriteLine("rmdir /s /q \"" + record.Path + "\"");
+                else if (record.Type == EItemType.File) stream.WriteLine("del /f \"" + record.Path + "\"");
             }
             stream.WriteLine("echo.");
             stream.WriteLine("echo Done!");
@@ -144,35 +140,33 @@ namespace MyUninstaller7 {
                 MessageBoxIcon.Exclamation) == DialogResult.Cancel) return;
             foreach (Record record in records) {
                 if (!record.Checked) continue;
-                if (record.Type == 0) {
-                    string parent = Utils.utils.parentPath(record.Path);
-                    string child = record.Path.Substring(parent.Length);
-                    RegistryKey rk = Utils.utils.OpenRegKey(parent, true);
+                if (record.Type == EItemType.RegistryKey) {
+                    MyTuple<string, string> split = Utils.utils.SplitParent(record.Path);
+                    RegistryKey rk = Utils.utils.OpenRegKey(split.Item1, true);
                     if (rk != null) {
                         try {
-                            rk.DeleteSubKeyTree(child);
+                            rk.DeleteSubKeyTree(split.Item2);
                         }
                         catch (Exception) { }
                         rk.Close();
                     }
                 }
-                else if (record.Type == 1) {
-                    string parent = Utils.utils.parentPath(record.Path);
-                    string valueName = record.Path.Substring(parent.Length);
-                    RegistryKey rk = Utils.utils.OpenRegKey(parent, true);
+                else if (record.Type == EItemType.RegistryValue) {
+                    MyTuple<string, string> split = Utils.utils.SplitParent(record.Path);
+                    RegistryKey rk = Utils.utils.OpenRegKey(split.Item1, true);
                     if (rk != null) {
                         try {
-                            rk.DeleteValue(valueName);
+                            rk.DeleteValue(split.Item2);
                         } catch (Exception) { }
                         rk.Close();
                     }
                 }
-                else if (record.Type == 2) {
+                else if (record.Type == EItemType.Folder) {
                     try {
                         Directory.Delete(record.Path, true);
                     } catch { }
                 }
-                else if (record.Type == 3) {
+                else if (record.Type == EItemType.File) {
                     File.Delete(record.Path);
                 }
             }
@@ -202,7 +196,21 @@ namespace MyUninstaller7 {
             });
             listView1.Items.Clear();
             foreach (Record rec in records) {
-                int imageIndex = rec.Type;
+                int imageIndex;
+                switch (rec.Type) {
+                    case EItemType.RegistryKey:
+                        imageIndex = 0; break;
+                    case EItemType.RegistryValue:
+                        imageIndex = 1; break;
+                    case EItemType.Folder:
+                        imageIndex = 2; break;
+                    case EItemType.File:
+                        imageIndex = 3; break;
+                    default:
+                        Debug.Fail("Unknown EItemType encountered while choosing imageIndex.");
+                        imageIndex = 0;
+                        break;
+                }
                 if (!rec.StillExists) imageIndex += 4;
                 // Adding it triggers the Checked
                 bool isChecked = rec.Checked;
@@ -213,8 +221,8 @@ namespace MyUninstaller7 {
                 rec.Checked = isChecked;
                 if (!rec.StillExists)
                     listItem.ForeColor = Color.Gray;
-                if (rec.Type == 0) listItem.BackColor = Color.GhostWhite;
-                else if (rec.Type == 2) listItem.BackColor = Color.LightYellow;
+                if (rec.Type == EItemType.RegistryKey) listItem.BackColor = Color.LightYellow;
+                else if (rec.Type == EItemType.Folder) listItem.BackColor = Color.LightYellow;
                 else listItem.BackColor = Color.White;
             }
             columnHeader1.AutoResize(ColumnHeaderAutoResizeStyle.ColumnContent);

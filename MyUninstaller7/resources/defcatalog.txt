@@ -7,6 +7,7 @@
 0	HKCU\Software\Classes\Local Settings\
 0	HKCU\Software\Microsoft\EventSystem\
 0	HKCU\Software\Microsoft\Internet Explorer\
+0	HKCU\Software\Microsoft\RestartManager\
 0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\
 0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StreamMRU\
 0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\
@@ -17,8 +18,11 @@
 0	HKLM\COMPONENTS\
 0	HKLM\Schema\
 0	HKLM\Software\Microsoft\EventSystem\
+0	HKLM\SOFTWARE\Microsoft\Fusion\NativeImagesIndex\
 0	HKLM\Software\Microsoft\Protected Storage System Provider\
+0	HKLM\SOFTWARE\Microsoft\RADAR\
 0	HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\
+0	HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SystemRestore\Volatile\
 0	HKLM\SYSTEM\
 
 2	C:\
@@ -33,5 +37,6 @@
 0	%HOMEDRIVE%%HOMEPATH%\AppData\Local\Temp\
 0	%HOMEDRIVE%%HOMEPATH%\AppData\Roaming\Microsoft\Windows\
 1	%windir%\
+0	%windir%\assembly\
 0	%windir%\Prefetch\
 0	%windir%\ServiceProfiles\LocalService\AppData\Roaming\PeerNetworking\

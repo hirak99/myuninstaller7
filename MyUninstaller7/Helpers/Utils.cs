@@ -19,6 +19,7 @@ namespace MyUninstaller7 {
         public T2 Item2;
         public MyTuple(T1 _Item1, T2 _Item2) { Item1=_Item1; Item2=_Item2;}
     }
+    public enum EItemType { RegistryKey, RegistryValue, Folder, File }
     class Utils {
         private Utils() { }
         private string appFolder=null;
@@ -56,32 +57,47 @@ namespace MyUninstaller7 {
         public RegistryKey OpenRegKey(string path) {
             return OpenRegKey(path, false);
         }
-        public bool Exists(string item) {
-            if (IsRegistry(item)) {
-                if (item[item.Length - 1] == '\\') {
-                    RegistryKey rk = OpenRegKey(item);
-                    if (rk != null) {
-                        rk.Close();
-                        return true;
-                    }
-                    else return false;
-                }
-                else {
-                    string parent = Utils.utils.parentPath(item);
-                    string valueName = item.Substring(parent.Length);
-                    RegistryKey rk = OpenRegKey(parent);
-                    if (rk != null) {
-                        bool result = rk.GetValueNames().Contains(valueName);
-                        rk.Close();
-                        return result;
-                    }
-                    else return false;
-                }
+
+        public EItemType GetType(string item) {
+            EItemType type;
+            string path = item;
+            if (Utils.utils.IsRegistry(path)) {
+                if (path.IndexOf(@"\\") > -1) type = EItemType.RegistryValue;
+                else type = EItemType.RegistryKey;
             }
             else {
-                if (item[item.Length - 1] == '\\')
-                    return Directory.Exists(item);
-                else return File.Exists(item);
+                if (path[path.Length - 1] != '\\') type = EItemType.File;
+                else type = EItemType.Folder;
+            }
+            return type;
+        }
+        public bool Exists(string item) {
+            EItemType type = GetType(item);
+            if (type == EItemType.RegistryKey) {
+                RegistryKey rk = OpenRegKey(item);
+                if (rk != null) {
+                    rk.Close();
+                    return true;
+                }
+                else return false;
+            }
+            else if (type == EItemType.RegistryValue) {
+                MyTuple<string, string> split = Utils.utils.SplitParent(item);
+                RegistryKey rk = OpenRegKey(split.Item1);
+                if (rk != null) {
+                    bool result = rk.GetValueNames().Contains(split.Item2);
+                    rk.Close();
+                    return result;
+                }
+                else return false;
+            }
+            if (type == EItemType.Folder)
+                return Directory.Exists(item);
+            else if (type == EItemType.File)
+                return File.Exists(item);
+            else {
+                Debug.Fail("Unknown EItemType encountered.");
+                return false;
             }
         }
 
@@ -218,9 +234,16 @@ namespace MyUninstaller7 {
 
         public static Utils utils = new Utils();
 
-        internal string parentPath(string p) {
-            while (p.Length > 0 && p[p.Length - 1] == '\\') p = p.Substring(0, p.Length - 1);
-            return p.Substring(0, p.LastIndexOf('\\') + 1);
+        internal MyTuple<string,string> SplitParent(string p) {
+            int sep = p.IndexOf(@"\\");
+            if (sep == -1) {
+                // determine the last @"\", ignoring the ending \ if any
+                string temp = p;
+                while (temp.Length > 0 && temp[temp.Length - 1] == '\\') temp = temp.Substring(0, temp.Length - 1);
+                sep = temp.LastIndexOf('\\');
+                return new MyTuple<string, string>(p.Substring(0, sep + 1), p.Substring(sep + 1));
+            }
+            return new MyTuple<string, string>(p.Substring(0, sep + 1), p.Substring(sep + 2));
         }
     }
 
