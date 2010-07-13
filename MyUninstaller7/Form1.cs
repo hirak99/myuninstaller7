@@ -48,7 +48,7 @@ namespace MyUninstaller7 {
         private int State = 0;
         protected void SetState(int newState) {
             State = newState;
-            toolStripButton1.Visible = (State == 0);
+            toolStripButton1.Enabled = (State == 0);
             foreach (ToolStripMenuItem button in new ToolStripMenuItem[]{
                 startNotingChangesToolStripMenuItem, cancelNotingChangesToolStripMenuItem
             })
@@ -56,7 +56,7 @@ namespace MyUninstaller7 {
             foreach (ToolStripButton button in new ToolStripButton[]{
                 toolStripButton2, toolStripButton3
             })
-                button.Visible = (State == 1);
+                button.Enabled = (State == 1);
             foreach (ToolStripMenuItem button in new ToolStripMenuItem[]{
                 endNotingChangesToolStripMenuItem
             })
