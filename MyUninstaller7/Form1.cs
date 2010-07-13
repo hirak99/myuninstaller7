@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
 using System.Threading;
+using System.Collections.Generic;
 
 namespace MyUninstaller7 {
     public partial class Form1 : Form {
@@ -47,19 +48,15 @@ namespace MyUninstaller7 {
         private int State = 0;
         protected void SetState(int newState) {
             State = newState;
-            foreach (ToolStripButton button in new ToolStripButton[]{
-                toolStripButton1, toolStripButton4
-            })
-                button.Enabled = (State == 0);
+            toolStripButton1.Visible = (State == 0);
             foreach (ToolStripMenuItem button in new ToolStripMenuItem[]{
-                startNotingChangesToolStripMenuItem, cancelNotingChangesToolStripMenuItem,
-                reloadToolStripMenuItem
+                startNotingChangesToolStripMenuItem, cancelNotingChangesToolStripMenuItem
             })
                 button.Enabled = (State == 0);
             foreach (ToolStripButton button in new ToolStripButton[]{
                 toolStripButton2, toolStripButton3
             })
-                button.Enabled = (State == 1);
+                button.Visible = (State == 1);
             foreach (ToolStripMenuItem button in new ToolStripMenuItem[]{
                 endNotingChangesToolStripMenuItem
             })
@@ -188,11 +185,21 @@ namespace MyUninstaller7 {
         //TODO: need to add view deleted items
         private void installedItemsToolStripMenuItem_Click(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0) return;
+            bool viewNewItems = sender.Equals(installedItemsToolStripMenuItem) ||
+                sender.Equals(toolStripButton6);
             int index = listView1.SelectedIndices[0];
-            UninstallForm uf = new UninstallForm(recordStore.recordInfos[index].record,
-                sender.Equals(installedItemsToolStripMenuItem) ||
-                sender.Equals(toolStripButton6));
-            uf.ShowDialog();
+            RecordStore.Record rec = recordStore.recordInfos[index].record;
+            List<string> items = viewNewItems ? rec.newItems : rec.deletedItems;
+            if (items.Count == 0) {
+                MessageBox.Show("There were no "+ (viewNewItems?"added":"deleted") + " items detected for this installation.",
+                    "Uninstaller 7",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
+            else {
+                UninstallForm uf = new UninstallForm(rec, viewNewItems);
+                uf.ShowDialog();
+            }
         }
 
         private void editRecordToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -211,34 +218,29 @@ namespace MyUninstaller7 {
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e) {
+            bool isSelected = (listView1.SelectedIndices.Count > 0);
+            toolStripButton5.Enabled = isSelected;
+            toolStripButton7.Enabled = isSelected;
+            toolStripButton8.Enabled = isSelected;
+            renameToolStripMenuItem.Enabled = isSelected;
+            selectColorToolStripMenuItem.Enabled = isSelected;
+            editRecordToolStripMenuItem.Enabled = isSelected;
+            deleteRecordToolStripMenuItem.Enabled = isSelected;
+            if (isSelected) SetToolColorTo(listView1.SelectedItems[0].BackColor);
+            else SetToolColorTo(Color.Gray);
             if (listView1.SelectedIndices.Count == 0 || State == 1) {
                 installedItemsToolStripMenuItem.Enabled = false;
                 viewDeletedToolStripMenuItem.Enabled = false;
-                renameToolStripMenuItem.Enabled = false;
-                editRecordToolStripMenuItem.Enabled = false;
-                toolStripButton5.Enabled = false;
                 toolStripButton6.Enabled = false;
-                SetToolColorTo(Color.Gray);
-                toolStripButton7.Enabled = false;
-                selectcolorToolStripMenuItem.Enabled = false;
-                deleteRecordToolStripMenuItem.Enabled = false;
             }
             else {
                 RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
                 string fileName = ri.fileName;
                 fileName = fileName.Substring(fileName.LastIndexOf('\\') + 1);
-                toolStripStatusLabel1.Text = "Selected entry is stored in " + fileName;
-                installedItemsToolStripMenuItem.Enabled = (ri.record.newItems.Count > 0);
-                viewDeletedToolStripMenuItem.Enabled = (ri.record.deletedItems.Count > 0);
-                renameToolStripMenuItem.Enabled = true;
-                editRecordToolStripMenuItem.Enabled = true;
-                toolStripButton5.Enabled = true;
-                toolStripButton6.Enabled = (ri.record.newItems.Count > 0);
-                SetToolColorTo(listView1.SelectedItems[0].BackColor);
-                toolStripButton7.Enabled = true;
-                selectcolorToolStripMenuItem.Enabled = true;
-                deleteRecordToolStripMenuItem.Enabled = true;
-                string s = ri.record.SuggestDisplayName();
+                toolStripStatusLabel1.Text = "Selected " + fileName + " (+" + ri.record.newItems.Count + "/-" + ri.record.deletedItems.Count + ")";
+                installedItemsToolStripMenuItem.Enabled = true;
+                viewDeletedToolStripMenuItem.Enabled = true;
+                toolStripButton6.Enabled = true;
             }
         }
 
@@ -272,7 +274,7 @@ namespace MyUninstaller7 {
             }
         }
 
-        private void selectcolorToolStripMenuItem_Click(object sender, EventArgs e) {
+        private void selectColorToolStripMenuItem_Click(object sender, EventArgs e) {
             RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
             Color? result = ColorChooser.Choose();
             if (result != null) {

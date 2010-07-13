@@ -31,6 +31,7 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
@@ -46,7 +47,7 @@
             this.actionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.reloadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.selectcolorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.selectColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.deleteRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
@@ -70,6 +71,7 @@
             this.toolStripSeparator1,
             this.toolStripButton4,
             this.toolStripButton5,
+            this.toolStripButton8,
             this.toolStripButton7,
             this.toolStripSeparator2,
             this.toolStripButton6});
@@ -123,7 +125,7 @@
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
             this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton4.Text = "toolStripButton4";
+            this.toolStripButton4.Text = "Reload records";
             this.toolStripButton4.ToolTipText = "Rescan Records folder and refresh all logs";
             this.toolStripButton4.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
@@ -137,6 +139,16 @@
             this.toolStripButton5.Text = "Rename record";
             this.toolStripButton5.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton8.Text = "Delete record";
+            this.toolStripButton8.Click += new System.EventHandler(this.deleteRecordToolStripMenuItem_Click);
+            // 
             // toolStripButton7
             // 
             this.toolStripButton7.BackColor = System.Drawing.SystemColors.Control;
@@ -144,8 +156,8 @@
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "Select color in which selected item will display";
-            this.toolStripButton7.Click += new System.EventHandler(this.selectcolorToolStripMenuItem_Click);
+            this.toolStripButton7.Text = "Choose record color";
+            this.toolStripButton7.Click += new System.EventHandler(this.selectColorToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -159,7 +171,7 @@
             this.toolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton6.Name = "toolStripButton6";
             this.toolStripButton6.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton6.Text = "Uninstaller";
+            this.toolStripButton6.Text = "Uninstaller (not available if noting changes)";
             this.toolStripButton6.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
             // 
             // statusStrip1
@@ -201,41 +213,42 @@
             this.toolStripMenuItem1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(35, 20);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // startNotingChangesToolStripMenuItem
             // 
             this.startNotingChangesToolStripMenuItem.Name = "startNotingChangesToolStripMenuItem";
             this.startNotingChangesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.startNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.startNotingChangesToolStripMenuItem.Text = "&Start Noting Changes";
             this.startNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // endNotingChangesToolStripMenuItem
             // 
             this.endNotingChangesToolStripMenuItem.Name = "endNotingChangesToolStripMenuItem";
-            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.endNotingChangesToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.endNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.endNotingChangesToolStripMenuItem.Text = "&End Noting Changes";
             this.endNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // cancelNotingChangesToolStripMenuItem
             // 
             this.cancelNotingChangesToolStripMenuItem.Name = "cancelNotingChangesToolStripMenuItem";
-            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.cancelNotingChangesToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.cancelNotingChangesToolStripMenuItem.Text = "&Cancel Noting Changes";
             this.cancelNotingChangesToolStripMenuItem.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(203, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(193, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(206, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -244,21 +257,21 @@
             this.actionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.reloadToolStripMenuItem,
             this.renameToolStripMenuItem,
-            this.selectcolorToolStripMenuItem,
+            this.selectColorToolStripMenuItem,
             this.editRecordToolStripMenuItem,
             this.deleteRecordToolStripMenuItem,
             this.toolStripMenuItem2,
             this.installedItemsToolStripMenuItem,
             this.viewDeletedToolStripMenuItem});
             this.actionsToolStripMenuItem.Name = "actionsToolStripMenuItem";
-            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.actionsToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.actionsToolStripMenuItem.Text = "&Actions";
             // 
             // reloadToolStripMenuItem
             // 
             this.reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             this.reloadToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.reloadToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.reloadToolStripMenuItem.Text = "&Reload records";
             this.reloadToolStripMenuItem.Click += new System.EventHandler(this.reloadToolStripMenuItem_Click);
             // 
@@ -266,23 +279,23 @@
             // 
             this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
             this.renameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.renameToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.renameToolStripMenuItem.Text = "&Rename...";
             this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
-            // selectcolorToolStripMenuItem
+            // selectColorToolStripMenuItem
             // 
-            this.selectcolorToolStripMenuItem.Name = "selectcolorToolStripMenuItem";
-            this.selectcolorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.selectcolorToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
-            this.selectcolorToolStripMenuItem.Text = "Select &color...";
-            this.selectcolorToolStripMenuItem.Click += new System.EventHandler(this.selectcolorToolStripMenuItem_Click);
+            this.selectColorToolStripMenuItem.Name = "selectColorToolStripMenuItem";
+            this.selectColorToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.selectColorToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
+            this.selectColorToolStripMenuItem.Text = "Select &color...";
+            this.selectColorToolStripMenuItem.Click += new System.EventHandler(this.selectColorToolStripMenuItem_Click);
             // 
             // editRecordToolStripMenuItem
             // 
             this.editRecordToolStripMenuItem.Name = "editRecordToolStripMenuItem";
             this.editRecordToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
-            this.editRecordToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.editRecordToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.editRecordToolStripMenuItem.Text = "&Edit record";
             this.editRecordToolStripMenuItem.Click += new System.EventHandler(this.editRecordToolStripMenuItem_Click);
             // 
@@ -290,27 +303,27 @@
             // 
             this.deleteRecordToolStripMenuItem.Name = "deleteRecordToolStripMenuItem";
             this.deleteRecordToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteRecordToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.deleteRecordToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.deleteRecordToolStripMenuItem.Text = "&Delete record...";
             this.deleteRecordToolStripMenuItem.Click += new System.EventHandler(this.deleteRecordToolStripMenuItem_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(193, 6);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(188, 6);
             // 
             // installedItemsToolStripMenuItem
             // 
             this.installedItemsToolStripMenuItem.Name = "installedItemsToolStripMenuItem";
             this.installedItemsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
-            this.installedItemsToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.installedItemsToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.installedItemsToolStripMenuItem.Text = "&Installed items...";
             this.installedItemsToolStripMenuItem.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
             // 
             // viewDeletedToolStripMenuItem
             // 
             this.viewDeletedToolStripMenuItem.Name = "viewDeletedToolStripMenuItem";
-            this.viewDeletedToolStripMenuItem.Size = new System.Drawing.Size(196, 22);
+            this.viewDeletedToolStripMenuItem.Size = new System.Drawing.Size(191, 22);
             this.viewDeletedToolStripMenuItem.Text = "&View deleted...";
             this.viewDeletedToolStripMenuItem.Click += new System.EventHandler(this.installedItemsToolStripMenuItem_Click);
             // 
@@ -319,13 +332,13 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
             this.helpToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
             this.aboutToolStripMenuItem.Text = "&About...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -406,7 +419,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem deleteRecordToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton7;
-        private System.Windows.Forms.ToolStripMenuItem selectcolorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectColorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton8;
     }
 }
 
