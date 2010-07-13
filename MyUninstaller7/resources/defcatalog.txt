@@ -3,18 +3,16 @@
 # 1 - include with recursion
 # 2 - include without recursion
 
-1	HKCR\
-0	HKCR\Local Settings\
 1	HKCU
 0	HKCU\Software\Classes\Local Settings\
 0	HKCU\Software\Microsoft\EventSystem\
-0	HKCUSoftware\Microsoft\Internet Explorer\
-0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\
-0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\StreamMRU\
-0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\Streams\
-0	HKCUSoftware\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\
-0	HKCUSoftware\Microsoft\Windows\CurrentVersion\NotificationMgr\
-0	HKCUSoftware\Microsoft\Windows\ShellNoRoam\
+0	HKCU\Software\Microsoft\Internet Explorer\
+0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\
+0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StreamMRU\
+0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\
+0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist\
+0	HKCU\Software\Microsoft\Windows\CurrentVersion\NotificationMgr\
+0	HKCU\Software\Microsoft\Windows\ShellNoRoam\
 1	HKLM\
 0	HKLM\COMPONENTS\
 0	HKLM\Schema\
@@ -28,8 +26,8 @@
 1	%ProgramFiles%\
 1	%ProgramData%\
 0	%ProgramData%\Microsoft\eHome\
-1	%ProgramData%\Microsoft\Microsoft Antimalware\
-1	%ProgramData%\Microsoft\Search\
+0	%ProgramData%\Microsoft\Microsoft Antimalware\
+0	%ProgramData%\Microsoft\Search\
 1	%HOMEDRIVE%%HOMEPATH%\
 0	%HOMEDRIVE%%HOMEPATH%\AppData\Local\Microsoft\Windows\Temporary Internet Files\
 0	%HOMEDRIVE%%HOMEPATH%\AppData\Local\Temp\

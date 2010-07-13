@@ -32,7 +32,8 @@ namespace MyUninstaller7 {
                         if (line.Length == 0 || line[0] == '#') continue;
                         string[] words = line.Split('\t');
                         words[1] = Environment.ExpandEnvironmentVariables(Utils.utils.PathSlash(words[1]));
-                        entries.Add(words[1],int.Parse(words[0]));
+                        //entries.Add(words[1],int.Parse(words[0]));
+                        entries[words[1]] = int.Parse(words[0]);
                     }
                 }
             }
@@ -57,7 +58,7 @@ namespace MyUninstaller7 {
             }
             if (rk == null) return;
             if (catalog.shouldIgnore(fullpath)) return;
-            if (nDepth++ <= 1) ReportProgress(fullpath);
+            if (nDepth++ <= 3) ReportProgress(fullpath);
             StoreItem(fullpath);
             try {
                 string[] valueNames = rk.GetValueNames();
