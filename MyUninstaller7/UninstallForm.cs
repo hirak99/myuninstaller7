@@ -105,11 +105,11 @@ namespace MyUninstaller7 {
                 else splitPos = progName.IndexOf(' ');
                 if (splitPos > -1) {
                     argument = progName.Substring(splitPos + 1);
-                    progName = progName.Substring(0, splitPos + 1);
+                    progName = progName.Substring(0, splitPos + 1).Trim();
                 }
                 Process puninst = Process.Start(progName, argument);
                 while (true) {
-                    MessageBox.Show("Native uninstallation process ('" + uninstCmds[0] + "') is running. Please click Ok when the process completes.",
+                    MessageBox.Show("Native uninstallation process is running. Please click Ok when the process completes.",
                         "Uninstaller 7",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Information);

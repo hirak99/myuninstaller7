@@ -115,7 +115,7 @@ namespace MyUninstaller7 {
         }
         private void LoadAllRecords() {
             recordInfos = new List<RecordInfo>();
-            string[] files = Directory.GetFiles(parentDir, "InstallationRecord*.rec");
+            string[] files = Directory.GetFiles(parentDir, "*.rec");
             foreach (string file in files) {
                 using (StreamReader sr = new StreamReader(file)) {
                     Record rec = Record.LoadFrom(sr);
