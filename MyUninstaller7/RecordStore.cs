@@ -8,6 +8,7 @@ using System.IO;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace MyUninstaller7 {
     public class RecordStore {
@@ -134,19 +135,38 @@ namespace MyUninstaller7 {
             record.DisplayName = record.SuggestDisplayName();
             return record;
         }
-        private string GetFreeFileName() {
+        private static string MakeValidFileName(string FileName) {
+            string s = "["+Regex.Escape(new string(Path.GetInvalidFileNameChars()))+"]";
+            return Regex.Replace(FileName, s, "_");
+        }
+        private string GetFreeFileName(string wantedName) {
+            string namePrefix = MakeValidFileName(wantedName);
             string name;
-            for (int i = 1; ; ++i) {
-                name = parentDir + "InstallationRecord" + i + ".rec";
+            for (int i = 0; ; ++i) {
+                name = parentDir + namePrefix + (i == 0 ? "" : "_" + i.ToString()) + ".rec";
                 if (!File.Exists(name)) break;
             }
             return name;
         }
         public Record AddRecord(List<string> newItems, List<string> deletedItems) {
             Record record = CreateRecord(newItems, deletedItems);
-            record.fileName = GetFreeFileName();
+            record.fileName = GetFreeFileName(record.DisplayName);
             records.Insert(0, record);
-            record.SaveToFile();
+            try {
+                record.SaveToFile();
+            } catch (Exception ex) {
+                string original = record.fileName;
+                record.fileName = GetFreeFileName("_failsafe");
+                MessageBox.Show("Error while writing to '" + original + "':\n" + ex.Message + "\n\nPress OK to attempt to recover and write to '" + record.fileName + "'.",
+                    "Uninstaller 7",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                record.SaveToFile();
+                MessageBox.Show("Write successful! Please note the name of the original file attempted to be written to - '" + original + "'.",
+                    "Uninstaller 7",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
             return record;
         }
     }
