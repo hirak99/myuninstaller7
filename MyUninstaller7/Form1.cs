@@ -237,8 +237,7 @@ namespace MyUninstaller7 {
             else {
                 RecordStore.Record rec = recordStore.records[listView1.SelectedIndices[0]];
                 string fileName = rec.fileName;
-                fileName = fileName.Substring(fileName.LastIndexOf('\\') + 1);
-                toolStripStatusLabel1.Text = "Selected " + fileName + " (+" + rec.newItems.Count + "/-" + rec.deletedItems.Count + ") installed " + rec.dateTime.ToString("dd-MMM-yyyy");
+                toolStripStatusLabel1.Text = "(" + rec.newItems.Count + "/-" + rec.deletedItems.Count + ") " + rec.dateTime.ToString("dd-MMM-yyyy") + " \"" + Path.GetFileName(rec.fileName) + "\"";
                 installedItemsToolStripMenuItem.Enabled = true;
                 viewDeletedToolStripMenuItem.Enabled = true;
                 toolStripButton6.Enabled = true;

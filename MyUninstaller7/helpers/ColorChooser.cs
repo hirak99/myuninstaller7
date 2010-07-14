@@ -79,14 +79,16 @@ namespace MyUninstaller7 {
             return Color.FromArgb((int)(r * 255.0f), (int)(g * 255.0f), (int)(b * 255.0f));
         }
         
-        private const int nButtons = 20;
+        private const int nButtons = 32;
+        private const int nButtonsPerRow = 4;
         private List<Button> buttons = new List<Button>();
         private void ColorPicker_Load(object sender, EventArgs e) {
+            Width = 1000;
             for (int i = 0; i < nButtons; ++i) {
                 Button btn = new Button();
                 if (i >= 1 && i < nButtons - 1) {
-                    double hue = (double)(i - 1) / 9 + 0.01;
-                    double light = 0.95 - Math.Floor(hue) * 0.15;
+                    double hue = (double)(i - 1) / 10 + 0.00001;
+                    double light = 0.95 - Math.Floor(hue) * 0.07;
                     hue = hue - Math.Floor(hue);
                     btn.BackColor = HSL2RGB(hue, 1, light);
                 }
@@ -96,7 +98,7 @@ namespace MyUninstaller7 {
                 buttons.Add(btn);
                 btn.FlatStyle = FlatStyle.Popup;
             }
-            Width = buttons[3].Right + Width - ClientRectangle.Width + 5;
+            Width = buttons[nButtonsPerRow - 1].Right + Width - ClientRectangle.Width + 5;
             Height = buttons[nButtons - 1].Bottom + Height - ClientRectangle.Height + 5;
             buttons[0].Text = "No color";
             buttons[nButtons-1].Text = "Cancel";
