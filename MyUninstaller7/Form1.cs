@@ -95,10 +95,10 @@ namespace MyUninstaller7 {
             else index = listView1.SelectedIndices[0];
             recordStore = new RecordStore(recordStoreDir);
             listView1.Items.Clear();
-            foreach (RecordStore.RecordInfo ri in recordStore.recordInfos) {
-                listView1.Items.Add(ri.record.DisplayName);
-                if (ri.record.color.HasValue)
-                    listView1.Items[listView1.Items.Count - 1].BackColor = ri.record.color.Value;
+            foreach (RecordStore.Record rec in recordStore.records) {
+                listView1.Items.Add(rec.DisplayName);
+                if (rec.color.HasValue)
+                    listView1.Items[listView1.Items.Count - 1].BackColor = rec.color.Value;
             }
             if (listView1.Items.Count > 0) listView1.Items[0].Selected = true;
             if (listView1.Items.Count == index) index--;
@@ -123,12 +123,12 @@ namespace MyUninstaller7 {
                     MessageBox.Show("No change was detected.", "Uninstaller 7", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else {
-                    RecordStore.RecordInfo ri = recordStore.AddRecord(sc.onlyIn2, sc.onlyIn1);
-                    string recordName=ri.record.DisplayName;
+                    RecordStore.Record record = recordStore.AddRecord(sc.onlyIn2, sc.onlyIn1);
+                    string recordName=record.DisplayName;
                     if (Utils.utils.InputBox("Uninstaller 7", "Name the record :", ref recordName) == DialogResult.OK)
-                        if (recordName != ri.record.DisplayName) {
-                            ri.record.DisplayName = recordName;
-                            ri.SaveToFile();
+                        if (recordName != record.DisplayName) {
+                            record.DisplayName = recordName;
+                            record.SaveToFile();
                         }
                     PopulateItems();
                 }
@@ -189,7 +189,7 @@ namespace MyUninstaller7 {
             bool viewNewItems = sender.Equals(installedItemsToolStripMenuItem) ||
                 sender.Equals(toolStripButton6);
             int index = listView1.SelectedIndices[0];
-            RecordStore.Record rec = recordStore.recordInfos[index].record;
+            RecordStore.Record rec = recordStore.records[index];
             List<string> items = viewNewItems ? rec.newItems : rec.deletedItems;
             if (items.Count == 0) {
                 MessageBox.Show("There were no "+ (viewNewItems?"added":"deleted") + " items detected for this installation.",
@@ -206,7 +206,7 @@ namespace MyUninstaller7 {
         private void editRecordToolStripMenuItem_Click(object sender, EventArgs e) {
             if (listView1.SelectedIndices.Count == 0) return;
             int index = listView1.SelectedIndices[0];
-            Process.Start("Notepad", recordStore.recordInfos[index].fileName);
+            Process.Start("Notepad", recordStore.records[index].fileName);
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -235,10 +235,10 @@ namespace MyUninstaller7 {
                 toolStripButton6.Enabled = false;
             }
             else {
-                RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
-                string fileName = ri.fileName;
+                RecordStore.Record rec = recordStore.records[listView1.SelectedIndices[0]];
+                string fileName = rec.fileName;
                 fileName = fileName.Substring(fileName.LastIndexOf('\\') + 1);
-                toolStripStatusLabel1.Text = "Selected " + fileName + " (+" + ri.record.newItems.Count + "/-" + ri.record.deletedItems.Count + ") installed " + ri.record.dateTime.ToString("dd-MMM-yyyy");
+                toolStripStatusLabel1.Text = "Selected " + fileName + " (+" + rec.newItems.Count + "/-" + rec.deletedItems.Count + ") installed " + rec.dateTime.ToString("dd-MMM-yyyy");
                 installedItemsToolStripMenuItem.Enabled = true;
                 viewDeletedToolStripMenuItem.Enabled = true;
                 toolStripButton6.Enabled = true;
@@ -246,12 +246,12 @@ namespace MyUninstaller7 {
         }
 
         private void renameToolStripMenuItem_Click(object sender, EventArgs e) {
-            RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
-            string newName = ri.record.DisplayName;
+            RecordStore.Record rec = recordStore.records[listView1.SelectedIndices[0]];
+            string newName = rec.DisplayName;
             if (Utils.utils.InputBox("Uninstaller 7", "Rename the record", ref newName) == DialogResult.OK
-                && newName != ri.record.DisplayName) {
-                ri.record.DisplayName = newName;
-                ri.SaveToFile();
+                && newName != rec.DisplayName) {
+                rec.DisplayName = newName;
+                rec.SaveToFile();
                 listView1.SelectedItems[0].Text = newName;
             }
         }
@@ -265,21 +265,21 @@ namespace MyUninstaller7 {
         }
 
         private void deleteRecordToolStripMenuItem_Click(object sender, EventArgs e) {
-            RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
-            if (MessageBox.Show("Delete record '" + ri.record.DisplayName + "'?",
+            RecordStore.Record rec = recordStore.records[listView1.SelectedIndices[0]];
+            if (MessageBox.Show("Delete record '" + rec.DisplayName + "'?",
                 "Uninstaller 7",
                 MessageBoxButtons.OKCancel,
                 MessageBoxIcon.Question) == DialogResult.OK) {
-                    File.Delete(ri.fileName);
+                    File.Delete(rec.fileName);
                     PopulateItems();
             }
         }
 
         private void selectColorToolStripMenuItem_Click(object sender, EventArgs e) {
-            RecordStore.RecordInfo ri = recordStore.recordInfos[listView1.SelectedIndices[0]];
+            RecordStore.Record ri = recordStore.records[listView1.SelectedIndices[0]];
             Color? result = ColorChooser.Choose();
             if (result != null) {
-                ri.record.color = (result.Value.IsSystemColor ? null : result);
+                ri.color = (result.Value.IsSystemColor ? null : result);
                 listView1.SelectedItems[0].BackColor = result.Value;
                 ri.SaveToFile();
                 SetToolColorTo(result.Value);

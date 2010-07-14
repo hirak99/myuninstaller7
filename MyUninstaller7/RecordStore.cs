@@ -12,6 +12,9 @@ using System.Diagnostics;
 namespace MyUninstaller7 {
     public class RecordStore {
         public class Record {
+            // fileName is probably the only item not loaded from file
+            public string fileName;
+
             public string DisplayName;
             public DateTime dateTime;
             // Default value of color is set in RecordStore.CreateRecord
@@ -85,7 +88,7 @@ namespace MyUninstaller7 {
                 return rec;
             }
             private static string strLineBeforeData = "Installation data follows -";
-            public void SaveTo(TextWriter outStream) {
+            private void SaveTo(TextWriter outStream) {
                 outStream.WriteLine("Title: " + DisplayName);
                 outStream.WriteLine("Datetime: " + dateTime.ToString("yyyy MMM dd hh:mm:ss.ffff tt"));
                 outStream.WriteLine("Color: " + (color.HasValue?ColorTranslator.ToHtml(color.Value):""));
@@ -95,18 +98,14 @@ namespace MyUninstaller7 {
                 foreach (string item in deletedItems)
                     outStream.WriteLine("D\t" + item);
             }
-        }
-
-        public class RecordInfo {
-            public Record record;
-            public string fileName;
             public void SaveToFile() {
                 using (StreamWriter sw = new StreamWriter(fileName)) {
-                    record.SaveTo(sw);
+                    SaveTo(sw);
                 }
             }
         }
-        public List<RecordInfo> recordInfos;
+
+        public List<Record> records;
 
         private string parentDir;
         public RecordStore(string ParentFolder) {
@@ -114,19 +113,17 @@ namespace MyUninstaller7 {
             LoadAllRecords();
         }
         private void LoadAllRecords() {
-            recordInfos = new List<RecordInfo>();
+            records = new List<Record>();
             string[] files = Directory.GetFiles(parentDir, "*.rec");
             foreach (string file in files) {
                 using (StreamReader sr = new StreamReader(file)) {
                     Record rec = Record.LoadFrom(sr);
                     if (rec == null) break;
-                    RecordInfo ri = new RecordInfo();
-                    ri.fileName = file;
-                    ri.record = rec;
-                    recordInfos.Add(ri);
+                    rec.fileName = file;
+                    records.Add(rec);
                 }
             }
-            recordInfos.Sort((a, b) => -a.record.dateTime.CompareTo(b.record.dateTime));
+            records.Sort((a, b) => -a.dateTime.CompareTo(b.dateTime));
         }
         public static Record CreateRecord(List<string> newItems, List<string> deletedItems) {
             Record record = new Record();
@@ -145,13 +142,12 @@ namespace MyUninstaller7 {
             }
             return name;
         }
-        public RecordInfo AddRecord(List<string> newItems, List<string> deletedItems) {
-            RecordInfo recordInfo = new RecordInfo();
-            recordInfo.record = CreateRecord(newItems, deletedItems);
-            recordInfo.fileName = GetFreeFileName();
-            recordInfos.Insert(0, recordInfo);
-            recordInfo.SaveToFile();
-            return recordInfo;
+        public Record AddRecord(List<string> newItems, List<string> deletedItems) {
+            Record record = CreateRecord(newItems, deletedItems);
+            record.fileName = GetFreeFileName();
+            records.Insert(0, record);
+            record.SaveToFile();
+            return record;
         }
     }
 }
