@@ -9,6 +9,7 @@
 0	HKCU\Software\Microsoft\EventSystem\
 0	HKCU\Software\Microsoft\Internet Explorer\
 0	HKCU\Software\Microsoft\RestartManager\
+0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\ComDlg32
 0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\RecentDocs\
 0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\StreamMRU\
 0	HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Streams\
